@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/ui/Section.astro';
+import Card from '../../../components/ui/Card.astro';
+import PostCard from '../../../components/blog/PostCard.astro';
+import { useTranslations, type Lang } from '../../../i18n/utils';
+import { sortByDateDesc } from '../../../lib/utils';
+
+const lang: Lang = 'vi';
+const t = useTranslations(lang);
+
+const posts = sortByDateDesc(
+  await getCollection(
+    'blog',
+    ({ data }) => (import.meta.env.PROD ? !data.draft : true) && data.lang === 'vi'
+  )
+);
+---
+
+<BaseLayout
+  title="Blog — Than Van Hong Son"
+  description={t('blog.subtitle')}
+  lang={lang}
+>
+  <Section kicker={t('blog.kicker')} title={t('blog.title')}>
+    <p class="reveal -mt-8 mb-12 max-w-2xl text-lg text-muted">
+      {t('blog.subtitle')}
+    </p>
+
+    {
+      posts.length > 0 ? (
+        <div class="grid gap-6 sm:grid-cols-2">
+          {posts.map((post, i) => (
+            <div class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <PostCard post={post} lang={lang} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Card class="reveal p-8 text-center text-muted">{t('blog.empty')}</Card>
+      )
+    }
+  </Section>
+</BaseLayout>

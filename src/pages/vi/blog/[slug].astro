@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import { postSlug } from '../../../lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection(
+    'blog',
+    ({ data }) => (import.meta.env.PROD ? !data.draft : true) && data.lang === 'vi'
+  );
+  return posts.map((p) => ({
+    params: { slug: postSlug(p.id) },
+    props: { post: p },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(post);
+---
+
+<BlogPost
+  title={post.data.title}
+  description={post.data.description}
+  lang="vi"
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  tags={post.data.tags}
+  minutesRead={remarkPluginFrontmatter.minutesRead}
+>
+  <Content />
+</BlogPost>

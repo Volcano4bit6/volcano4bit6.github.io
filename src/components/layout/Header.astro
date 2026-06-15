@@ -1,0 +1,102 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Lang } from '../../i18n/utils';
+import { useTranslations, localizePath } from '../../i18n/utils';
+import { profile } from '../../data/profile';
+import ThemeToggle from '../ui/ThemeToggle.astro';
+import LangToggle from '../ui/LangToggle.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const home = localizePath('/', lang);
+
+const links = [
+  { href: `${home}#about`, label: t('nav.about') },
+  { href: `${home}#experience`, label: t('nav.experience') },
+  { href: `${home}#publications`, label: t('nav.publications') },
+  { href: `${home}#skills`, label: t('nav.skills') },
+  { href: localizePath('blog', lang), label: t('nav.blog') },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-bg/70 backdrop-blur">
+  <nav
+    class="mx-auto flex max-w-5xl items-center justify-between px-5 py-3.5 sm:px-8"
+    aria-label="Primary"
+  >
+    <a
+      href={home}
+      class="font-display text-lg font-bold tracking-tight text-fg transition hover:text-accent"
+    >
+      Son<span class="text-accent">.</span>
+    </a>
+
+    <ul class="hidden items-center gap-7 md:flex">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm text-muted transition hover:text-fg"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-1.5">
+      <ThemeToggle lang={lang} />
+      <LangToggle lang={lang} />
+      <Button
+        href={`mailto:${profile.email}`}
+        variant="primary"
+        class="hidden sm:inline-flex"
+      >
+        {t('nav.contact')}
+      </Button>
+
+      <details class="group relative md:hidden">
+        <summary
+          class="grid size-9 cursor-pointer list-none place-items-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-fg [&::-webkit-details-marker]:hidden"
+          aria-label={lang === 'vi' ? 'Trình đơn' : 'Menu'}
+        >
+          <Icon name="lucide:menu" class="size-5 group-open:hidden" />
+          <Icon name="lucide:x" class="hidden size-5 group-open:block" />
+        </summary>
+        <div
+          class="absolute right-0 mt-2 w-52 overflow-hidden rounded-xl border border-border bg-surface shadow-lg"
+        >
+          <ul class="flex flex-col p-2">
+            {
+              links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="block rounded-lg px-3 py-2 text-sm text-muted transition hover:bg-surface-2 hover:text-fg"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a
+                href={`mailto:${profile.email}`}
+                class="block rounded-lg px-3 py-2 text-sm font-medium text-accent transition hover:bg-surface-2"
+              >
+                {t('nav.contact')}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </nav>
+</header>

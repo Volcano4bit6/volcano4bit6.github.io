@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+import { skillGroups } from '../../data/skills';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="skills" kicker={t('skills.kicker')} title={t('skills.title')}>
+  <ul class="grid gap-5 sm:grid-cols-2">
+    {
+      skillGroups.map((group, i) => (
+        <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+          <Card hover class="h-full">
+            <div class="flex h-full flex-col gap-4 p-6">
+              <div class="flex items-center gap-3">
+                <span class="grid size-10 shrink-0 place-items-center rounded-lg bg-accent-soft text-accent">
+                  <Icon name={group.icon} class="size-5" />
+                </span>
+                <h3 class="font-display text-lg">{group.label[lang]}</h3>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <Badge class="text-xs">{item}</Badge>
+                ))}
+              </div>
+            </div>
+          </Card>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

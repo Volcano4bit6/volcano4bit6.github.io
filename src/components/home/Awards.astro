@@ -1,0 +1,75 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import { awards, certifications } from '../../data/awards';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="awards" kicker={t('awards.kicker')} title={t('awards.title')}>
+  <div class="space-y-12">
+    <div>
+      <h3 class="reveal mb-5 font-mono text-sm uppercase tracking-wider text-muted">
+        {t('awards.awards')}
+      </h3>
+      <ul class="grid gap-5 sm:grid-cols-2">
+        {
+          awards.map((award, i) => (
+            <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <Card hover class="h-full">
+                <div class="flex h-full gap-4 p-6">
+                  <span class="grid size-11 shrink-0 place-items-center rounded-lg bg-accent-soft text-accent">
+                    <Icon name={award.icon} class="size-5" />
+                  </span>
+                  <div class="flex flex-col gap-1">
+                    <h4 class="font-display text-base leading-snug">{award.title[lang]}</h4>
+                    <p class="text-sm text-accent">{award.topic[lang]}</p>
+                    <p class="mt-1 font-mono text-xs text-faint">
+                      {award.place[lang]} · {award.date[lang]}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="reveal mb-5 font-mono text-sm uppercase tracking-wider text-muted">
+        {t('awards.certs')}
+      </h3>
+      <ul class="grid gap-5 sm:grid-cols-2">
+        {
+          certifications.map((cert, i) => (
+            <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <Card hover class="h-full">
+                <div class="flex h-full gap-4 p-6">
+                  <span class="grid size-11 shrink-0 place-items-center rounded-lg bg-accent-soft text-accent">
+                    <Icon name={cert.icon} class="size-5" />
+                  </span>
+                  <div class="flex flex-col gap-1">
+                    <h4 class="font-display text-base leading-snug">{cert.title}</h4>
+                    <p class="text-sm text-muted">{cert.issuer}</p>
+                    <p class="mt-1 font-mono text-xs text-faint">{cert.date[lang]}</p>
+                    {cert.note && (
+                      <p class="text-xs text-faint">{cert.note[lang]}</p>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</Section>

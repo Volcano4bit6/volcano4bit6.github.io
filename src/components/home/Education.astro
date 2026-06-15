@@ -1,0 +1,59 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import { education } from '../../data/education';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="education" kicker={t('edu.kicker')} title={t('edu.title')}>
+  <ul class="space-y-5">
+    {
+      education.map((edu, i) => {
+        const period = `${edu.start} — ${edu.current ? t('edu.present') : edu.end[lang]}`;
+        return (
+          <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+            <Card hover>
+              <div class="flex flex-col gap-2 p-6">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <h3 class="font-display text-lg">
+                    {edu.degree[lang]}
+                    <span class="font-sans text-base font-normal text-accent-2">
+                      · {edu.field[lang]}
+                    </span>
+                  </h3>
+                  <span class="font-mono text-xs text-faint">{period}</span>
+                </div>
+
+                <p class="flex items-center gap-1.5 text-sm text-muted">
+                  <Icon name="lucide:graduation-cap" class="size-4 shrink-0" />
+                  {edu.school[lang]}
+                </p>
+
+                {edu.gpa && (
+                  <p class="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">
+                    <span class="font-mono">
+                      {t('edu.gpa')}: <span class="text-accent">{edu.gpa}</span>
+                    </span>
+                    {edu.gpaNote && (
+                      <span class="rounded-full border border-border bg-surface-2 px-2.5 py-0.5 font-mono text-xs">
+                        {edu.gpaNote[lang]}
+                      </span>
+                    )}
+                  </p>
+                )}
+              </div>
+            </Card>
+          </li>
+        );
+      })
+    }
+  </ul>
+</Section>

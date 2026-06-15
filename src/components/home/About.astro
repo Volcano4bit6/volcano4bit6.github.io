@@ -1,0 +1,61 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import { profile } from '../../data/profile';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="about" kicker={t('about.kicker')} title={t('about.title')}>
+  <div class="grid gap-10 md:grid-cols-5 md:gap-12">
+    <div class="reveal space-y-5 md:col-span-3">
+      {
+        profile.bio[lang].map((para) => (
+          <p class="leading-relaxed text-muted">{para}</p>
+        ))
+      }
+    </div>
+
+    <div class="reveal md:col-span-2" style="--reveal-delay:120ms">
+      <Card class="h-full">
+        <div class="flex flex-col gap-5 p-6">
+          <div
+            class="bg-grid relative grid aspect-square place-items-center overflow-hidden rounded-2xl border border-border bg-surface-2"
+          >
+            <span class="text-gradient font-display text-7xl md:text-8xl">
+              {profile.initials}
+            </span>
+          </div>
+          <div>
+            <p class="font-display text-lg">{profile.name}</p>
+            <p class="text-sm text-accent">{profile.role[lang]}</p>
+            <p class="mt-2 flex items-center gap-1.5 font-mono text-xs text-faint">
+              <Icon name="lucide:map-pin" class="size-3.5" />
+              {profile.location[lang]}
+            </p>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </div>
+
+  <ul class="reveal mt-10 grid grid-cols-3 gap-4" style="--reveal-delay:160ms">
+    {
+      profile.stats.map((stat) => (
+        <li>
+          <Card class="h-full p-5 text-center sm:p-6">
+            <p class="font-display text-3xl text-accent md:text-4xl">{stat.value}</p>
+            <p class="mt-1 text-xs text-muted sm:text-sm">{stat.label[lang]}</p>
+          </Card>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

@@ -1,0 +1,65 @@
+---
+title: 'Running a Comic-Translation Pipeline on Local LLMs'
+description: 'How we combine OCR, machine translation, inpainting and LangChain multi-agent orchestration to translate comics entirely on local GPUs.'
+pubDate: 2026-06-10
+tags: ['LLM', 'LangChain', 'MLOps', 'Computer Vision']
+lang: 'en'
+draft: false
+---
+
+Translating a comic page is deceptively hard. It is not a single model call — it is a small assembly line of computer-vision and language tasks that all have to agree on the same coordinates, the same reading order, and the same tone. We built that assembly line to run end to end on local GPUs, with no data ever leaving the machine. Here is how the pieces fit together.
+
+## The four-stage flow
+
+Every page moves through the same path: **OCR → machine translation → inpainting → typesetting**.
+
+1. **OCR** detects text regions and lifts the original characters out of each speech bubble. We keep the bounding boxes — they are the contract every later stage depends on.
+2. **Machine translation** rewrites each region. A local LLM works far better than a generic NMT model here because comic dialogue is short, idiomatic, and context-hungry; the model needs the surrounding bubbles to get pronouns and honorifics right.
+3. **Inpainting** erases the source text from the bubble so the background art stays clean.
+4. **Typesetting** reflows the translated string back into the cleared region, picking a font size that fits.
+
+The hard constraint is VRAM. Running OCR, an LLM, and a diffusion-based inpainting model at once will not fit on a single consumer card unless every component is quantized and loaded lazily.
+
+## Quantization to fit the budget
+
+We load the translation model in 4-bit. On a 12 GB card this is the difference between "runs" and "out of memory":
+
+```python
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+import torch
+
+quant = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True,
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    "your-local-translation-model",
+    quantization_config=quant,
+    device_map="auto",
+)
+```
+
+We also unload the inpainting model between batches and stream pages through one stage at a time. Peak VRAM is what kills you, not average VRAM.
+
+## Multi-agent QA with LangChain
+
+A single translation pass is not enough — comics are full of onomatopoeia, name consistency, and tone shifts that a one-shot model quietly gets wrong. We wrap the work in a small multi-agent loop: a **translator** agent produces the draft, and a **reviewer** agent checks consistency against a running glossary of character names and prior pages, then requests fixes.
+
+```python
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+
+translator = create_tool_calling_agent(llm, [lookup_glossary], translate_prompt)
+reviewer = create_tool_calling_agent(llm, [check_consistency], review_prompt)
+
+draft = AgentExecutor(agent=translator, tools=[lookup_glossary]).invoke(page)
+final = AgentExecutor(agent=reviewer, tools=[check_consistency]).invoke(draft)
+```
+
+The reviewer shares the same glossary tool the translator writes to, so a name decided on page 1 stays fixed for the whole volume. That shared state is what makes long series feel coherent instead of drifting.
+
+## Closing note
+
+Nothing here is exotic on its own — OCR, a quantized LLM, an inpainting model, an agent loop. The engineering is in the seams: keeping bounding boxes consistent across stages, holding VRAM under the ceiling, and giving the agents shared memory so translations stay coherent across hundreds of pages. Run it all locally and you get privacy, zero API cost, and a pipeline you can actually debug end to end.

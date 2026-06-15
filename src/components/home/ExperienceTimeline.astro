@@ -1,0 +1,23 @@
+---
+import Section from '../ui/Section.astro';
+import ExperienceItem from './ExperienceItem.astro';
+import { experience } from '../../data/experience';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id="experience" kicker={t('exp.kicker')} title={t('exp.title')}>
+  <ol class="ml-1.5 space-y-8 border-l border-border">
+    {
+      experience.map((item, i) => (
+        <ExperienceItem item={item} lang={lang} index={i} />
+      ))
+    }
+  </ol>
+</Section>

@@ -1,0 +1,75 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+import { publications } from '../../data/publications';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const ME = 'Than Van Hong Son';
+
+/** Split an authors string into segments, flagging the author's own name. */
+function splitAuthors(authors: string) {
+  return authors
+    .split(new RegExp(`(${ME})`))
+    .filter((s) => s.length > 0)
+    .map((part) => ({ text: part, me: part === ME }));
+}
+---
+
+<Section id="publications" kicker={t('pub.kicker')} title={t('pub.title')}>
+  <ul class="space-y-5">
+    {
+      publications.map((pub, i) => (
+        <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+          <Card hover>
+            <div class="flex flex-col gap-3 p-6">
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <p class="kicker">{pub.topic}</p>
+                {pub.firstAuthor && (
+                  <span class="rounded-full border border-accent/40 bg-accent-soft px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-wide text-accent">
+                    {t('pub.first')}
+                  </span>
+                )}
+              </div>
+
+              <h3 class="font-display text-lg leading-snug">{pub.title}</h3>
+
+              <p class="text-sm text-muted">
+                {splitAuthors(pub.authors).map((seg) =>
+                  seg.me ? <strong class="text-fg">{seg.text}</strong> : seg.text
+                )}
+              </p>
+
+              <p class="font-mono text-xs text-faint">
+                {pub.venue[lang]} · {pub.year}
+              </p>
+
+              {pub.url && (
+                <div class="pt-1">
+                  <Button
+                    href={pub.url}
+                    variant="ghost"
+                    class="px-0"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t('pub.read')}
+                    <Icon name="lucide:external-link" class="size-4" />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Card>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

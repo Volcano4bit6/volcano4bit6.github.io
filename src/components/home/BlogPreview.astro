@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+import PostCard from '../blog/PostCard.astro';
+import { sortByDateDesc } from '../../lib/utils';
+import { localizePath, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const all = await getCollection(
+  'blog',
+  ({ data }) => (import.meta.env.PROD ? !data.draft : true) && data.lang === lang
+);
+const posts = sortByDateDesc(all).slice(0, 3);
+---
+
+<Section id="blog" kicker={t('blog.kicker')} title={t('blog.title')}>
+  <p class="reveal -mt-8 mb-10 max-w-xl text-muted">{t('blog.subtitle')}</p>
+
+  {
+    posts.length > 0 ? (
+      <>
+        <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((p, i) => (
+            <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <PostCard post={p} lang={lang} />
+            </li>
+          ))}
+        </ul>
+        <div class="reveal mt-10">
+          <Button href={localizePath('blog', lang)} variant="outline">
+            {t('blog.viewall')}
+          </Button>
+        </div>
+      </>
+    ) : (
+      <Card class="reveal">
+        <p class="p-8 text-center text-muted">{t('blog.empty')}</p>
+      </Card>
+    )
+  }
+</Section>

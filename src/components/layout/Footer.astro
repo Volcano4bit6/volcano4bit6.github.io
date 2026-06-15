@@ -1,0 +1,95 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Lang } from '../../i18n/utils';
+import { useTranslations } from '../../i18n/utils';
+import { profile } from '../../data/profile';
+import Button from '../ui/Button.astro';
+import Reveal from '../ui/Reveal.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<section
+  id="contact"
+  class="border-t border-border bg-surface/40 bg-grid"
+  aria-labelledby="contact-title"
+>
+  <div class="mx-auto max-w-5xl px-5 py-20 text-center sm:px-8 md:py-28">
+    <Reveal>
+      <p class="kicker">{t('contact.kicker')}</p>
+      <h2
+        id="contact-title"
+        class="mt-3 font-display text-3xl font-bold md:text-5xl"
+      >
+        <span class="text-gradient">{t('contact.title')}</span>
+      </h2>
+      <p class="mx-auto mt-5 max-w-xl text-balance text-muted">
+        {t('contact.subtitle')}
+      </p>
+      <div class="mt-8 flex justify-center">
+        <Button href={`mailto:${profile.email}`} variant="primary">
+          <Icon name="lucide:mail" class="size-4" />
+          {t('contact.email')}
+        </Button>
+      </div>
+    </Reveal>
+  </div>
+</section>
+
+<footer class="border-t border-border">
+  <div
+    class="mx-auto flex max-w-5xl flex-col gap-8 px-5 py-12 sm:px-8 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="space-y-2">
+      <a
+        href="#main"
+        class="font-display text-lg font-bold tracking-tight text-fg transition hover:text-accent"
+      >
+        {profile.name}<span class="text-accent">.</span>
+      </a>
+      <p class="text-sm text-muted">{profile.role[lang]}</p>
+    </div>
+
+    <div class="flex flex-col gap-5 md:items-end">
+      <ul class="flex items-center gap-1.5">
+        {
+          profile.socials.map((social) => (
+            <li>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                class="grid size-9 place-items-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-fg"
+              >
+                <Icon name={social.icon} class="size-5" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href="#main"
+        class="inline-flex items-center gap-1.5 text-xs font-mono text-faint transition hover:text-fg"
+      >
+        <Icon name="lucide:arrow-up" class="size-3.5" />
+        Top
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-border">
+    <div
+      class="mx-auto flex max-w-5xl flex-col gap-2 px-5 py-6 text-xs text-faint sm:flex-row sm:items-center sm:justify-between sm:px-8"
+    >
+      <p>{t('footer.built')}</p>
+      <p>© {year} {profile.name}. {t('footer.rights')}</p>
+    </div>
+  </div>
+</footer>

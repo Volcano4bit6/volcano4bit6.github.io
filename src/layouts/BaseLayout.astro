@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../i18n/utils';
+import { useTranslations } from '../i18n/utils';
+import BaseHead from '../components/seo/BaseHead.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  image?: string;
+  article?: boolean;
+}
+
+const { title, description, lang, image, article = false } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<!doctype html>
+<html lang={lang} class="dark">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      lang={lang}
+      image={image}
+      article={article}
+    />
+  </head>
+  <body class="min-h-screen bg-bg text-fg font-sans" id="top">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:m-3 focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-fg"
+    >
+      {t('a11y.skip')}
+    </a>
+
+    <Header lang={lang} />
+    <main id="main"><slot /></main>
+    <Footer lang={lang} />
+
+    <script>
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (es) => {
+            for (const e of es) {
+              if (e.isIntersecting) {
+                e.target.classList.add('in-view');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -8% 0px' },
+        );
+        reveals.forEach((el) => io.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add('in-view'));
+      }
+    </script>
+
+    <script>
+      document.addEventListener('click', (e) => {
+        const b =
+          e.target instanceof Element
+            ? e.target.closest('[data-theme-toggle]')
+            : null;
+        if (!b) return;
+        const d = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', d ? 'dark' : 'light');
+      });
+    </script>
+  </body>
+</html>

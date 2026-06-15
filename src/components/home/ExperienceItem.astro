@@ -1,0 +1,90 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+import type { Experience } from '../../data/experience';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  item: Experience;
+  lang: Lang;
+  index?: number;
+}
+
+const { item, lang, index = 0 } = Astro.props;
+const t = useTranslations(lang);
+const period = `${item.start} — ${item.current ? t('exp.present') : item.end?.[lang] ?? t('exp.present')}`;
+---
+
+<li class="reveal relative pl-8 md:pl-10" style={`--reveal-delay:${index * 80}ms`}>
+  <span
+    class="absolute -left-[6.5px] top-2 size-3 rounded-full bg-accent ring-4 ring-bg"
+    aria-hidden="true"
+  >
+  </span>
+
+  <Card hover>
+    <div class="p-6">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <h3 class="font-display text-lg">
+          {
+            item.url ? (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noreferrer"
+                class="transition-colors hover:text-accent"
+              >
+                {item.company}
+              </a>
+            ) : (
+              item.company
+            )
+          }
+          <span class="font-sans text-base font-normal text-muted">
+            · {item.role[lang]}
+          </span>
+        </h3>
+        <div class="flex items-center gap-2">
+          {
+            item.current && (
+              <span class="rounded-full border border-accent/40 bg-accent-soft px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-wide text-accent">
+                {t('exp.present')}
+              </span>
+            )
+          }
+          <span class="font-mono text-xs text-faint">{period}</span>
+        </div>
+      </div>
+
+      <p class="mt-2 flex flex-wrap items-center gap-x-2 text-sm text-muted">
+        {item.project && <span class="text-accent-2">{item.project[lang]}</span>}
+        <span class="inline-flex items-center gap-1 text-faint">
+          <Icon name="lucide:map-pin" class="size-3.5" />
+          {item.location[lang]}
+        </span>
+      </p>
+
+      <p class="mt-3 text-muted">{item.summary[lang]}</p>
+
+      <ul class="mt-4 space-y-2">
+        {
+          item.bullets[lang].map((b) => (
+            <li class="flex gap-2.5 text-sm text-muted">
+              <Icon
+                name="lucide:check"
+                class="mt-0.5 size-4 shrink-0 text-accent"
+                aria-hidden="true"
+              />
+              <span>{b}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        {item.tags.map((tag) => <Badge class="text-xs">{tag}</Badge>)}
+      </div>
+    </div>
+  </Card>
+</li>

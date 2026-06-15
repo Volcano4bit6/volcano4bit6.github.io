@@ -1,0 +1,65 @@
+---
+title: 'Vận hành pipeline dịch truyện tranh trên LLM cục bộ'
+description: 'Cách chúng tôi kết hợp OCR, dịch máy, inpainting và điều phối đa tác tử bằng LangChain để dịch truyện tranh hoàn toàn trên GPU cục bộ.'
+pubDate: 2026-06-10
+tags: ['LLM', 'LangChain', 'MLOps', 'Computer Vision']
+lang: 'vi'
+draft: false
+---
+
+Dịch một trang truyện tranh khó hơn vẻ ngoài rất nhiều. Đó không phải một lần gọi mô hình — mà là cả một dây chuyền nhỏ gồm các tác vụ thị giác máy tính và ngôn ngữ, tất cả đều phải thống nhất về cùng một tọa độ, cùng một thứ tự đọc và cùng một giọng văn. Chúng tôi xây dựng dây chuyền đó để chạy trọn vẹn trên GPU cục bộ, không để dữ liệu nào rời khỏi máy. Đây là cách các mảnh ghép khớp với nhau.
+
+## Quy trình bốn giai đoạn
+
+Mỗi trang đi qua cùng một lộ trình: **OCR → dịch máy → inpainting → dàn chữ**.
+
+1. **OCR** phát hiện vùng chữ và bóc ký tự gốc ra khỏi từng bong bóng thoại. Chúng tôi giữ lại các khung bao (bounding box) — đó là "hợp đồng" mà mọi giai đoạn sau đều phụ thuộc vào.
+2. **Dịch máy** viết lại từng vùng. Một LLM cục bộ làm tốt hơn nhiều so với mô hình NMT thông thường, vì thoại truyện tranh thường ngắn, nhiều thành ngữ và phụ thuộc ngữ cảnh; mô hình cần các bong bóng xung quanh để xử lý đúng đại từ và cách xưng hô.
+3. **Inpainting** xóa chữ gốc khỏi bong bóng để phần nền tranh vẫn sạch.
+4. **Dàn chữ** đưa chuỗi đã dịch trở lại vùng vừa xóa, chọn cỡ chữ vừa khít.
+
+Ràng buộc khắc nghiệt nhất là VRAM. Chạy đồng thời OCR, một LLM và một mô hình inpainting dựa trên diffusion sẽ không vừa một card phổ thông, trừ khi mọi thành phần đều được lượng tử hóa và nạp theo nhu cầu.
+
+## Lượng tử hóa để vừa ngân sách bộ nhớ
+
+Chúng tôi nạp mô hình dịch ở 4-bit. Trên card 12 GB, đây là ranh giới giữa "chạy được" và "hết bộ nhớ":
+
+```python
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+import torch
+
+quant = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True,
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    "your-local-translation-model",
+    quantization_config=quant,
+    device_map="auto",
+)
+```
+
+Chúng tôi cũng giải phóng mô hình inpainting giữa các lô và đẩy từng trang qua từng giai đoạn một. Thứ giết bạn là VRAM đỉnh, không phải VRAM trung bình.
+
+## Kiểm thử chất lượng đa tác tử với LangChain
+
+Một lượt dịch duy nhất là chưa đủ — truyện tranh đầy từ tượng thanh, tính nhất quán của tên riêng và những chuyển đổi giọng văn mà mô hình một lượt âm thầm dịch sai. Chúng tôi gói công việc trong một vòng lặp đa tác tử nhỏ: tác tử **dịch giả** tạo bản nháp, còn tác tử **kiểm duyệt** đối chiếu tính nhất quán với một bảng thuật ngữ đang chạy gồm tên nhân vật và các trang trước, rồi yêu cầu sửa.
+
+```python
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+
+translator = create_tool_calling_agent(llm, [lookup_glossary], translate_prompt)
+reviewer = create_tool_calling_agent(llm, [check_consistency], review_prompt)
+
+draft = AgentExecutor(agent=translator, tools=[lookup_glossary]).invoke(page)
+final = AgentExecutor(agent=reviewer, tools=[check_consistency]).invoke(draft)
+```
+
+Tác tử kiểm duyệt dùng chung công cụ glossary mà dịch giả ghi vào, nên một cái tên đã chốt ở trang 1 sẽ cố định cho cả tập. Trạng thái dùng chung đó là thứ giúp các bộ truyện dài đọc liền mạch thay vì trôi dạt.
+
+## Lời kết
+
+Không thứ gì ở đây là kỳ lạ khi đứng riêng — OCR, một LLM lượng tử hóa, một mô hình inpainting, một vòng lặp tác tử. Phần kỹ thuật nằm ở các mối nối: giữ khung bao nhất quán xuyên suốt các giai đoạn, ghìm VRAM dưới trần, và cho các tác tử bộ nhớ dùng chung để bản dịch nhất quán qua hàng trăm trang. Chạy tất cả cục bộ và bạn có quyền riêng tư, chi phí API bằng không, và một pipeline bạn thực sự gỡ lỗi được từ đầu đến cuối.

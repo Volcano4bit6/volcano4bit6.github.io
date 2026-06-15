@@ -1,0 +1,148 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import { profile } from '../../data/profile';
+import { techMarquee } from '../../data/skills';
+import { localizePath, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const roles = profile.roles[lang];
+---
+
+<section
+  class="relative flex min-h-[88vh] items-center overflow-hidden"
+>
+  <div class="bg-grid absolute inset-0 -z-10" aria-hidden="true"></div>
+  <div
+    class="animate-float-glow absolute -left-32 top-10 -z-10 size-[34rem] rounded-full bg-accent/20 opacity-60 blur-3xl"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="animate-float-glow absolute -right-24 bottom-0 -z-10 size-[28rem] rounded-full bg-accent-2/15 opacity-50 blur-3xl"
+    style="animation-delay:-7s"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="mx-auto w-full max-w-5xl px-5 py-24 sm:px-8">
+    <p
+      class="reveal mb-7 inline-flex items-center gap-2 rounded-full border border-border bg-surface-2/60 px-4 py-1.5 font-mono text-xs uppercase tracking-wider text-muted"
+    >
+      <span class="relative grid place-items-center" aria-hidden="true">
+        <span class="absolute size-2 animate-ping rounded-full bg-accent opacity-75"></span>
+        <span class="size-2 rounded-full bg-accent"></span>
+      </span>
+      {t('hero.available')}
+    </p>
+
+    <h1
+      class="reveal text-gradient max-w-3xl font-display text-5xl leading-[1.05] md:text-7xl"
+      style="--reveal-delay:80ms"
+    >
+      {profile.name}
+    </h1>
+
+    <p
+      class="reveal mt-5 font-mono text-lg text-fg md:text-xl"
+      style="--reveal-delay:140ms"
+    >
+      {t('hero.role')} ·{' '}
+      <span
+        id="hero-role"
+        class="terminal-cursor text-accent"
+        data-roles={JSON.stringify(roles)}>{roles[0]}</span>
+    </p>
+
+    <p
+      class="reveal mt-6 max-w-xl text-pretty leading-relaxed text-muted"
+      style="--reveal-delay:200ms"
+    >
+      {profile.tagline[lang]}
+    </p>
+
+    <div
+      class="reveal mt-9 flex flex-wrap items-center gap-3"
+      style="--reveal-delay:260ms"
+    >
+      <Button href={`${localizePath('/', lang)}#experience`}>
+        {t('hero.cta.work')}
+        <Icon name="lucide:arrow-down" class="size-4" />
+      </Button>
+      <Button href={profile.cv} variant="outline" download>
+        {t('hero.cta.cv')}
+        <Icon name="lucide:download" class="size-4" />
+      </Button>
+    </div>
+
+    <ul
+      class="reveal mt-8 flex items-center gap-2"
+      style="--reveal-delay:320ms"
+    >
+      {
+        profile.socials.map((social) => (
+          <li>
+            <a
+              href={social.href}
+              target={social.href.startsWith('http') ? '_blank' : undefined}
+              rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
+              aria-label={social.label}
+              class="grid size-10 place-items-center rounded-lg border border-border text-muted transition hover:border-accent hover:text-accent"
+            >
+              <Icon name={social.icon} class="size-5" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <a
+    href={`${localizePath('/', lang)}#about`}
+    class="absolute bottom-24 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 font-mono text-xs uppercase tracking-wider text-faint transition hover:text-accent md:flex"
+  >
+    {t('hero.scroll')}
+    <Icon name="lucide:chevrons-down" class="size-4 animate-bounce" />
+  </a>
+
+  <div
+    class="absolute inset-x-0 bottom-0 overflow-hidden border-t border-border bg-bg/40 py-4 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
+    aria-hidden="true"
+  >
+    <div class="marquee-track flex w-max items-center gap-10">
+      {
+        [...techMarquee, ...techMarquee].map((tech) => (
+          <span class="flex shrink-0 items-center gap-10 font-mono text-sm text-faint">
+            {tech}
+            <span class="size-1 rounded-full bg-border-strong" />
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const el = document.getElementById('hero-role');
+  if (el?.dataset.roles) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const words: string[] = JSON.parse(el.dataset.roles);
+    if (!reduce && words.length > 1) {
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % words.length;
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.25s ease';
+        window.setTimeout(() => {
+          el.textContent = words[i];
+          el.style.opacity = '1';
+        }, 250);
+      }, 2200);
+    }
+  }
+</script>

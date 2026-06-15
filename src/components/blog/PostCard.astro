@@ -1,0 +1,57 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+import { localizePath, type Lang } from '../../i18n/utils';
+import { formatDate, postSlug } from '../../lib/utils';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  lang: Lang;
+}
+
+const { post, lang } = Astro.props;
+const href = localizePath(`blog/${postSlug(post.id)}`, lang);
+---
+
+<a
+  href={href}
+  class="group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+>
+  <Card hover class="flex h-full flex-col gap-3 p-6">
+    <time
+      datetime={post.data.pubDate.toISOString()}
+      class="font-mono text-xs text-faint"
+    >
+      {formatDate(post.data.pubDate, lang)}
+    </time>
+
+    <h3 class="font-display text-xl transition-colors group-hover:text-accent">
+      {post.data.title}
+    </h3>
+
+    <p class="line-clamp-2 text-muted">{post.data.description}</p>
+
+    {
+      post.data.tags.length > 0 && (
+        <div class="mt-1 flex flex-wrap gap-2">
+          {post.data.tags.map((tag) => (
+            <Badge class="text-xs">{tag}</Badge>
+          ))}
+        </div>
+      )
+    }
+
+    <span
+      class="mt-auto inline-flex items-center gap-1.5 pt-2 font-mono text-sm text-accent"
+      aria-hidden="true"
+    >
+      read more
+      <Icon
+        name="lucide:arrow-right"
+        class="size-4 transition-transform group-hover:translate-x-1"
+      />
+    </span>
+  </Card>
+</a>
