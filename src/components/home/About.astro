@@ -1,5 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Section from '../ui/Section.astro';
 import Card from '../ui/Card.astro';
 import { profile } from '../../data/profile';
@@ -11,6 +13,13 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+// Drop a photo at src/assets/profile.(jpg|png|webp...) and it auto-replaces the monogram.
+const photoModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/profile.{jpg,jpeg,png,webp,avif}',
+  { eager: true },
+);
+const photo = Object.values(photoModules)[0]?.default;
 ---
 
 <Section id="about" kicker={t('about.kicker')} title={t('about.title')}>
@@ -29,9 +38,22 @@ const t = useTranslations(lang);
           <div
             class="bg-grid relative grid aspect-square place-items-center overflow-hidden rounded-2xl border border-border bg-surface-2"
           >
-            <span class="text-gradient font-display text-7xl md:text-8xl">
-              {profile.initials}
-            </span>
+            {
+              photo ? (
+                <Image
+                  src={photo}
+                  alt={profile.name}
+                  class="absolute inset-0 size-full object-cover"
+                  widths={[400, 800]}
+                  sizes="(min-width: 768px) 40vw, 90vw"
+                  loading="eager"
+                />
+              ) : (
+                <span class="text-gradient font-display text-7xl md:text-8xl">
+                  {profile.initials}
+                </span>
+              )
+            }
           </div>
           <div>
             <p class="font-display text-lg">{profile.name}</p>
