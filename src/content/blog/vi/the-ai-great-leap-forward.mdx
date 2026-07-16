@@ -1,0 +1,40 @@
+---
+title: 'Đại Nhảy Vọt của AI'
+description: 'Vài suy nghĩ ngắn từ bài viết của Han-chung Lee: vì sao mệnh lệnh "ai cũng phải làm AI" từ trên xuống lại giống Đại Nhảy Vọt của Trung Quốc - tạo ra hoạt động thay vì kết quả.'
+pubDate: 2026-07-16
+tags: ['AI', 'Strategy', 'Evaluation']
+lang: 'vi'
+draft: false
+---
+
+Gần đây mình đọc bài [*The AI Great Leap Forward*](https://leehanchung.github.io/blogs/2026/04/05/the-ai-great-leap-forward/) của Han-chung Lee, và phép so sánh lịch sử trong đó cứ ám ảnh mình mãi. Những mệnh lệnh "chuyển đổi AI" từ trên xuống hôm nay trông rất giống Đại Nhảy Vọt của Trung Quốc - rất nhiều hoạt động hối hả, đo bằng chỉ tiêu, nhưng lặng lẽ chẳng tạo ra thứ gì dùng được.
+
+## Những lò luyện thép sân sau
+
+Năm 1958, Mao ra lệnh cho mọi ngôi làng ở Trung Quốc phải sản xuất thép. Những người nông dân không hề biết luyện kim đã nấu chảy cả nồi niêu của mình trong các lò sân sau và báo cáo những con số ngoạn mục. Thép làm ra giòn và vô dụng. Trong khi đó mùa màng không ai thu hoạch thối rữa ngoài đồng, và khoảng 30 triệu người chết đói. Niềm tin lúc đó là: quyết tâm cộng với chỉ tiêu có thể thay cho chuyên môn. Nó không thể.
+
+## Phiên bản 2026
+
+Đổi "thép" thành "AI" là bạn có bức tranh hôm nay. Hết công ty này đến công ty khác ban ra mệnh lệnh từ trên xuống: mọi phòng ban, mọi đội, mọi cá nhân đều phải "thu hẹp khoảng cách AI". Chẳng quan trọng chuyện không ai trong đội từng huấn luyện một mô hình, thiết kế một hệ đánh giá, hay debug một hệ thống truy hồi - quyết tâm được coi là đủ. Cả phòng ban ghép nối các canvas kiểu n8n, bắn prompt vào mô hình mà không hề đánh giá, rồi gọi đó là chuyển đổi.
+
+## Những kẻ bán sự phức tạp
+
+Công cụ khiến việc này trở nên dễ dàng, và đó chính là cái bẫy. Chúng bán sự đơn giản về mặt hình ảnh trong khi sinh ra mớ bòng bong bên dưới. Một canvas kéo-thả khiến việc nối mười lệnh gọi LLM trở nên cực kỳ dễ, và việc debug xem vì sao cái thứ tám lại bịa chuyện vào mỗi thứ Ba trở nên bất khả thi. Dashboard xanh mướt, demo chạy ngon, và không ai đo xem liệu nó có cho ra kết quả đúng hay không - cho tới khi ai đó ở khâu sau thử dùng đầu ra.
+
+## Góc nhìn của mình, dưới vai trò kỹ sư
+
+Thứ còn thiếu trong cả hai câu chuyện là như nhau: đánh giá (evaluation). Thép mà bạn không bao giờ kiểm thử thì cũng chỉ là nồi niêu nấu chảy. Một chuỗi LLM mà bạn không bao giờ đánh giá thì cũng chỉ là một cỗ máy sinh số ngẫu nhiên đầy tự tin. Mệnh lệnh có thể tạo ra chuyển động, nhưng không thể tạo ra năng lực - và nếu bạn không biết được thứ đó có chạy đúng không, thì chuyển động là tất cả những gì bạn có.
+
+Điều mình cố làm thay vào đó, và cũng muốn gợi ý cho bạn:
+
+- Bắt đầu từ một bài toán thật và một cách đo thành công, chứ không phải từ "chúng ta phải dùng AI".
+- Dựng eval trước khi mở rộng một pipeline. Nếu bạn không chấm điểm được nó, bạn không thể tin nó.
+- Giữ những người có chuyên môn thật trong vòng lặp. Quyết tâm không debug được cái node thứ tám.
+
+AI là một đòn bẩy thực sự mạnh. Nhưng một đòn bẩy không gắn với phép đo nào thì chỉ là cách nhanh hơn để tạo ra thép vô dụng.
+
+## Nguồn
+
+Bài này là bản tóm tắt và suy ngẫm cá nhân. Lập luận trung tâm - phép so sánh với Đại Nhảy Vọt, "những kẻ bán sự phức tạp", và khâu đánh giá còn thiếu - đến từ bài gốc. Bạn hãy đọc bản đầy đủ:
+
+- Han-chung Lee, "The AI Great Leap Forward", ngày 5 tháng 4, 2026. Xem tại: [leehanchung.github.io/blogs/2026/04/05/the-ai-great-leap-forward](https://leehanchung.github.io/blogs/2026/04/05/the-ai-great-leap-forward/)
