@@ -8,24 +8,39 @@ export interface SkillGroup {
 
 export const skillGroups: SkillGroup[] = [
   {
+    label: { en: 'GenAI / LLM', vi: 'GenAI / LLM' },
+    icon: 'lucide:brain-circuit',
+    items: [
+      'LangChain',
+      'Multi-Agent Systems',
+      'Local LLM Deployment',
+      'Quantization',
+      'Prompt Engineering',
+      'Stable Diffusion',
+    ],
+  },
+  {
+    label: { en: 'Computer Vision', vi: 'Thị giác máy tính' },
+    icon: 'lucide:eye',
+    items: [
+      'PyTorch',
+      'TensorFlow / Keras',
+      'MOT & Re-ID',
+      'DeepStream',
+      'OCR',
+      'Pose Estimation',
+      'Face Recognition',
+    ],
+  },
+  {
+    label: { en: 'MLOps & Data', vi: 'MLOps & Dữ liệu' },
+    icon: 'lucide:server-cog',
+    items: ['Airflow', 'MLflow', 'Feast', 'Docker', 'Grafana', 'SQL / NoSQL', 'Time-Series'],
+  },
+  {
     label: { en: 'Languages', vi: 'Ngôn ngữ lập trình' },
     icon: 'lucide:code-xml',
-    items: ['Python', 'C++', 'C', 'C#', 'JavaScript', 'R', 'MATLAB', 'SQL'],
-  },
-  {
-    label: { en: 'AI / ML Frameworks', vi: 'Framework AI / ML' },
-    icon: 'lucide:brain-circuit',
-    items: ['PyTorch', 'TensorFlow', 'Keras', 'LangChain', 'Hugging Face', 'OpenCV'],
-  },
-  {
-    label: { en: 'Computer Vision & GenAI', vi: 'Thị giác & GenAI' },
-    icon: 'lucide:eye',
-    items: ['Stable Diffusion', 'DeepStream', 'MOT / Re-ID', '3D Pose', 'Depth Estimation', 'OCR'],
-  },
-  {
-    label: { en: 'MLOps & Infra', vi: 'MLOps & Hạ tầng' },
-    icon: 'lucide:server-cog',
-    items: ['Docker', 'Airflow', 'MLflow', 'Feast', 'Grafana', 'NoSQL'],
+    items: ['Python', 'C / C++', 'C#', 'JavaScript', 'R'],
   },
 ];
 

@@ -15,8 +15,8 @@ export const profile = {
 
   // Short hero tagline
   tagline: {
-    en: 'I build real-time computer-vision, generative-AI and LLM systems — from research papers to products that ship.',
-    vi: 'Tôi xây dựng các hệ thống thị giác máy tính thời gian thực, AI tạo sinh và LLM — từ nghiên cứu đến sản phẩm thực tế.',
+    en: 'I turn research-grade models into products that run fast and cheap in production — multi-agent LLM pipelines on local GPUs, real-time computer vision and end-to-end MLOps.',
+    vi: 'Tôi biến các mô hình nghiên cứu thành sản phẩm chạy nhanh và tiết kiệm trong thực tế — pipeline LLM multi-agent trên GPU cục bộ, thị giác máy tính thời gian thực và MLOps đầu-cuối.',
   },
 
   // Rotating words after "AI" in the hero
@@ -28,18 +28,18 @@ export const profile = {
   // Longer About narrative
   bio: {
     en: [
-      'I am a Middle AI Engineer based in Da Nang with a background in Data Science & AI and a Master’s in Computer Science in progress. Over the past few years I have shipped AI across the full stack — real-time computer vision on the edge, generative image models, and LLM-powered automation pipelines.',
-      'Today I lead an AI team building an end-to-end comic-translation pipeline that runs entirely on local GPUs, combining OCR, machine translation, inpainting and LangChain multi-agent orchestration. I care about making models fast, reliable and genuinely useful in production.',
+      'I am an AI Engineer based in Da Nang with 3+ years shipping production AI — multi-agent LLM pipelines running fully on local GPUs, real-time computer vision, and end-to-end MLOps. I have a background in Data Science & AI and a Master’s in Computer Science in progress, plus a first-author Springer publication.',
+      'Today I build the AI core of a real-time multilingual meeting assistant at FPT Software, while leading a part-time AI team at BK High Tech on an end-to-end comic-localization pipeline. I am strongest at turning research-grade models into products that run fast and cheap in production.',
     ],
     vi: [
-      'Tôi là Kỹ sư AI (Middle) tại Đà Nẵng, nền tảng Khoa học Dữ liệu & AI và đang học Thạc sĩ Khoa học Máy tính. Vài năm qua tôi đã triển khai AI trên nhiều mảng — thị giác máy tính thời gian thực trên thiết bị biên, mô hình sinh ảnh, và các pipeline tự động hóa dùng LLM.',
-      'Hiện tôi dẫn dắt một nhóm AI xây dựng pipeline dịch truyện tranh đầu-cuối chạy hoàn toàn trên GPU cục bộ, kết hợp OCR, dịch máy, inpainting và điều phối multi-agent với LangChain. Tôi quan tâm đến việc làm cho mô hình nhanh, ổn định và thực sự hữu ích trong sản xuất.',
+      'Tôi là Kỹ sư AI tại Đà Nẵng với hơn 3 năm triển khai AI thực tế — pipeline LLM multi-agent chạy hoàn toàn trên GPU cục bộ, thị giác máy tính thời gian thực và MLOps đầu-cuối. Tôi có nền tảng Khoa học Dữ liệu & AI, đang học Thạc sĩ Khoa học Máy tính, cùng một công bố Springer với vai trò tác giả chính.',
+      'Hiện tôi xây dựng lõi AI cho trợ lý cuộc họp đa ngôn ngữ thời gian thực tại FPT Software, đồng thời dẫn dắt (bán thời gian) một nhóm AI tại BK High Tech với pipeline bản địa hóa truyện tranh đầu-cuối. Thế mạnh của tôi là biến các mô hình nghiên cứu thành sản phẩm chạy nhanh và tiết kiệm trong thực tế.',
     ],
   },
 
   // Headline stats shown in the hero / about
   stats: [
-    { value: '4+', label: { en: 'Years in AI', vi: 'Năm làm AI' } },
+    { value: '3+', label: { en: 'Years in AI', vi: 'Năm làm AI' } },
     { value: '2', label: { en: 'Publications', vi: 'Công bố' } },
     { value: '2', label: { en: 'Awards', vi: 'Giải thưởng' } },
   ],
