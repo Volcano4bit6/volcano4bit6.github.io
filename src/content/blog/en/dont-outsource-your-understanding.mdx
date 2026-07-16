@@ -1,0 +1,45 @@
+---
+title: "Don't Outsource Your Understanding"
+description: 'A short take on Han-chung Lee’s essay: hand the routine work to AI, but keep the understanding and the verification for yourself.'
+pubDate: 2026-07-16
+tags: ['AI', 'Coding Agents', 'Productivity']
+lang: 'en'
+draft: false
+---
+
+I recently read [*Don't Outsource Your Understanding*](https://leehanchung.github.io/blogs/2026/05/01/dont-outsource-your-understanding/) by Han-chung Lee, and it put words to something I feel every time I ship with an AI agent. The argument is simple: you can outsource the **work** to a model, but the moment you also outsource the **understanding**, the debt comes due — and you won't have enough of the problem in your head to pay it.
+
+## Offloading vs. surrender
+
+Lee draws a line between two things that look similar but aren't:
+
+- **Cognitive offloading** — you let the tool do the grind, but you stay in the loop to read, check, and learn from the output. You still own the mental model.
+- **Cognitive surrender** — you remove yourself entirely. The tool does the work *and* the thinking, and you just paste whatever comes out.
+
+Offloading compounds into skill. Surrender compounds into a **slop-field**: layer after layer of plausible-looking, low-quality output stacked on top of each other until the whole thing slows to a crawl and nobody can say why.
+
+## When the bill arrives
+
+The essay's examples land because they're ordinary, not exotic:
+
+- A solo founder ships with Cursor, Lovable and Bolt for six months. The app *works* — real users, real revenue. Then a contractor opens the codebase and says "wtf is this." No structure, no architecture, and a founder who surrendered the understanding can't fix the slop.
+- A lawyer files a brief with citations the model hallucinated.
+- Engineers chain AI nodes into a pipeline and never test or evaluate any of it.
+
+In every case the failure isn't "the AI was bad." It's that the human stopped verifying.
+
+## My take, as an engineer
+
+This maps directly onto how I try to work with agents day to day. The rule I keep coming back to: **let the agent write it, but never let it be the last one to read it.**
+
+- Read the diff, not just the summary. Walk the code path the change actually takes.
+- Re-derive the tricky part in my own words before I accept it. If I can't explain why it works, it isn't done.
+- Treat verification as the real work — because it is. The reconstruction *is* where the understanding gets built.
+
+Agents make me dramatically faster at the parts that were always tedious. What they can't do is hold the mental model *for* me. Staying in the loop — reading, checking, rebuilding it in my own head — is the part worth protecting.
+
+## Source
+
+This post is a summary and personal reflection. The core ideas — cognitive offloading vs. surrender, the "slop-field", and the founder / lawyer / pipeline examples — all come from the original essay. Please read it in full:
+
+- Han-chung Lee, "Don't Outsource Your Understanding", 1 May 2026. Available at: [leehanchung.github.io/blogs/2026/05/01/dont-outsource-your-understanding](https://leehanchung.github.io/blogs/2026/05/01/dont-outsource-your-understanding/)
