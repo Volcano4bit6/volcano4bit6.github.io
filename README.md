@@ -22,11 +22,20 @@ npx astro check    # type / template diagnostics
 ```
 
 ## Add a blog post
-Create a Markdown/MDX file under the right language folder:
+
+**Fastest way — the `new-blog` skill.** In a Claude Code session on this repo, run
+`/new-blog` (or just ask to "write a new blog post"). It reads your draft from a
+**Google Doc** (via the Google Drive connector) or from text you paste, then generates
+both the EN and VI files with correct frontmatter, validates with `npm run build`, and
+pushes. One-time setup: install the **Google Drive** connector on claude.ai and enable
+it in the chat. See `.claude/skills/new-blog/SKILL.md`.
+
+**Manual way.** Create a Markdown/MDX file under the right language folder — the two
+languages share the **same filename** so the EN↔VI toggle resolves:
 
 ```
-src/content/blog/en/my-post.mdx    # English
-src/content/blog/vi/bai-viet.mdx   # Vietnamese
+src/content/blog/en/my-post.mdx    # English   -> /blog/my-post/
+src/content/blog/vi/my-post.mdx    # Vietnamese -> /vi/blog/my-post/
 ```
 
 Frontmatter:
