@@ -1,0 +1,43 @@
+---
+title: 'Đừng giao phó sự hiểu biết của bạn'
+description: 'Vài suy nghĩ ngắn từ bài viết của Han-chung Lee: hãy giao phần việc lặp lại cho AI, nhưng giữ lại sự hiểu và khâu kiểm chứng cho chính mình.'
+pubDate: 2026-07-16
+tags: ['AI', 'Coding Agents', 'Productivity']
+lang: 'vi'
+draft: false
+---
+
+Gần đây tôi đọc bài [*Don't Outsource Your Understanding*](https://leehanchung.github.io/blogs/2026/05/01/dont-outsource-your-understanding/) của Han-chung Lee, và nó nói đúng điều tôi cảm nhận mỗi lần ship sản phẩm cùng một AI agent. Luận điểm rất gọn: bạn có thể giao **phần việc** cho mô hình, nhưng khoảnh khắc bạn giao luôn cả **sự hiểu**, món nợ sẽ đến hạn — và lúc đó bạn không còn đủ bài toán trong đầu để trả.
+
+## Offloading và surrender
+
+Lee vạch ra ranh giới giữa hai thứ trông giống nhau nhưng không hề giống:
+
+- **Cognitive offloading** — bạn để công cụ làm phần cực nhọc, nhưng vẫn ở trong vòng lặp để đọc, kiểm tra và học từ kết quả. Mô hình nhận thức vẫn thuộc về bạn.
+- **Cognitive surrender** — bạn rút hẳn ra ngoài. Công cụ vừa làm việc *vừa* suy nghĩ, còn bạn chỉ dán lại thứ nó trả ra.
+
+Offloading tích lũy thành kỹ năng. Surrender tích lũy thành một **"slop-field"**: hết lớp này đến lớp khác của những kết quả trông có vẻ hợp lý nhưng kém chất lượng, chồng lên nhau đến khi cả hệ thống chậm dần và không ai nói được vì sao.
+
+## Khi hóa đơn tới hạn
+
+Các ví dụ trong bài đắt giá vì chúng bình thường, không hề xa lạ:
+
+- Một founder solo ship sản phẩm bằng Cursor, Lovable và Bolt suốt sáu tháng. App *chạy được* — người dùng thật, doanh thu thật. Rồi một contractor mở codebase lên và thốt "wtf is this". Không cấu trúc, không kiến trúc, và một founder đã giao phó sự hiểu thì không thể sửa được đống slop.
+- Một luật sư nộp bản tóm tắt với các trích dẫn do mô hình bịa ra.
+- Vài kỹ sư nối chuỗi các node AI thành pipeline mà không hề test hay đánh giá.
+
+Ở mọi trường hợp, thất bại không phải vì "AI dở". Mà vì con người đã ngừng kiểm chứng.
+
+## Góc nhìn của tôi, dưới vai trò kỹ sư
+
+Điều này khớp thẳng với cách tôi cố gắng làm việc với agent mỗi ngày. Quy tắc tôi luôn quay lại: **cứ để agent viết, nhưng đừng bao giờ để nó là người đọc cuối cùng.**
+
+- Đọc diff, không chỉ đọc phần tóm tắt. Đi qua đúng code path mà thay đổi thực sự chạy vào.
+- Tự dựng lại đoạn hóc búa bằng lời của mình trước khi chấp nhận. Nếu chưa giải thích được vì sao nó chạy, nghĩa là chưa xong.
+- Coi việc kiểm chứng là công việc thật — vì đúng là như vậy. Chính khâu tái dựng là nơi sự hiểu được hình thành.
+
+Agent giúp tôi nhanh hơn hẳn ở những phần vốn luôn tẻ nhạt. Thứ chúng không làm thay được là *giữ hộ* tôi mô hình nhận thức. Ở lại trong vòng lặp — đọc, kiểm tra, dựng lại nó trong đầu mình — mới là phần đáng bảo vệ.
+
+---
+
+*Bài tóm tắt và suy ngẫm dựa trên [Han-chung Lee, "Don't Outsource Your Understanding" (05/2026)](https://leehanchung.github.io/blogs/2026/05/01/dont-outsource-your-understanding/). Hãy đọc bản gốc để có lập luận đầy đủ.*
