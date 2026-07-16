@@ -23,31 +23,56 @@ export interface Experience {
 
 export const experience: Experience[] = [
   {
-    company: 'BK High Tech',
+    company: 'FPT Software',
     role: { en: 'AI Engineer', vi: 'Kỹ sư AI' },
+    project: {
+      en: 'Real-time Meeting Intelligence',
+      vi: 'Nền tảng họp thông minh thời gian thực',
+    },
+    location: { en: 'Da Nang, Vietnam', vi: 'Đà Nẵng, Việt Nam' },
+    start: 'Jun 2026',
+    end: null,
+    current: true,
+    summary: {
+      en: 'Building the AI core of a real-time multilingual meeting assistant — live transcription, diarization and meeting Q&A.',
+      vi: 'Xây dựng lõi AI cho trợ lý cuộc họp đa ngôn ngữ thời gian thực — phiên âm trực tiếp, phân tách người nói và hỏi–đáp cuộc họp.',
+    },
+    bullets: {
+      en: [
+        'Build the AI core of a real-time meeting assistant: live transcription, speaker diarization and meeting Q&A.',
+        'Designed the streaming-quality benchmark for STT + translation (CER, BLEU, COMET/XCOMET, StreamLAAL, RTF) on SimulEval.',
+      ],
+      vi: [
+        'Xây dựng lõi AI của trợ lý cuộc họp thời gian thực: phiên âm trực tiếp, phân tách người nói và hỏi–đáp cuộc họp.',
+        'Thiết kế bộ benchmark chất lượng streaming cho STT + dịch (CER, BLEU, COMET/XCOMET, StreamLAAL, RTF) trên SimulEval.',
+      ],
+    },
+    tags: ['STT', 'Diarization', 'LLM', 'SimulEval', 'Real-Time', 'Streaming'],
+  },
+  {
+    company: 'BK High Tech',
+    role: { en: 'AI Lead (Part-time)', vi: 'Trưởng nhóm AI (Bán thời gian)' },
     project: { en: 'Comic AI Translation', vi: 'Dịch truyện tranh bằng AI' },
     location: { en: 'Remote · Da Nang, Vietnam', vi: 'Từ xa · Đà Nẵng, Việt Nam' },
     start: 'Jul 2025',
     end: null,
     current: true,
     summary: {
-      en: 'Leading an AI team building an automated comic-translation pipeline that runs fully on local GPUs.',
-      vi: 'Dẫn dắt nhóm AI xây dựng pipeline dịch truyện tranh tự động chạy hoàn toàn trên GPU cục bộ.',
+      en: 'Leading a cross-functional AI team building an end-to-end comic-localization pipeline that runs fully on local GPUs (part-time since Jun 2026).',
+      vi: 'Dẫn dắt nhóm AI đa chức năng xây dựng pipeline bản địa hóa truyện tranh đầu-cuối chạy hoàn toàn trên GPU cục bộ (bán thời gian từ Th6 2026).',
     },
     bullets: {
       en: [
-        'Architected an end-to-end comic-translation pipeline (OCR → machine translation → inpainting), slashing manual localization time.',
-        'Built a LangChain multi-agent orchestration system to boost translation quality and consistency for local LLMs.',
-        'Ran all models on constrained local GPUs via quantization and efficient VRAM management.',
+        'Lead a cross-functional AI team — task allocation, resources and roadmap — building an end-to-end comic-localization pipeline (OCR → translation → inpainting) that replaces most manual localization work.',
+        'Designed a LangChain multi-agent orchestration system that improves translation quality and consistency using fully local LLMs, with no external API dependency.',
+        'Brought cloud inference cost to zero via quantization and VRAM management, running the entire stack on constrained consumer GPUs.',
         'Used time-series monitoring of model metrics to forecast system resource requirements.',
-        'Led a cross-functional AI team — task allocation, resource management and stakeholder collaboration.',
       ],
       vi: [
-        'Thiết kế pipeline dịch truyện tranh đầu-cuối (OCR → dịch máy → inpainting), giảm mạnh thời gian bản địa hóa thủ công.',
-        'Xây dựng hệ thống điều phối multi-agent bằng LangChain để nâng chất lượng và tính nhất quán cho LLM cục bộ.',
-        'Chạy toàn bộ mô hình trên GPU cục bộ giới hạn nhờ lượng tử hóa và quản lý VRAM hiệu quả.',
+        'Dẫn dắt nhóm AI đa chức năng — phân bổ công việc, nguồn lực và lộ trình — xây dựng pipeline bản địa hóa truyện tranh đầu-cuối (OCR → dịch → inpainting), thay thế phần lớn công việc thủ công.',
+        'Thiết kế hệ thống điều phối multi-agent bằng LangChain giúp nâng chất lượng và tính nhất quán của bản dịch với LLM hoàn toàn cục bộ, không phụ thuộc API bên ngoài.',
+        'Đưa chi phí suy luận trên cloud về 0 nhờ lượng tử hóa và quản lý VRAM, chạy toàn bộ hệ thống trên GPU phổ thông giới hạn.',
         'Giám sát chỉ số mô hình bằng phân tích chuỗi thời gian để dự báo nhu cầu tài nguyên hệ thống.',
-        'Quản lý nhóm AI đa chức năng — phân bổ công việc, quản lý nguồn lực và phối hợp với các bên liên quan.',
       ],
     },
     tags: ['LangChain', 'LLM', 'OCR', 'Inpainting', 'Quantization', 'Multi-Agent'],
@@ -56,7 +81,7 @@ export const experience: Experience[] = [
     company: 'Permate',
     url: 'https://permate.com',
     role: { en: 'AI / Product R&D Specialist', vi: 'Chuyên viên R&D AI / Sản phẩm' },
-    project: { en: 'Affiliate Marketing Platform', vi: 'Nền tảng Affiliate Marketing' },
+    project: { en: 'Performance-marketing Platform', vi: 'Nền tảng Performance-marketing' },
     location: { en: 'Da Nang, Vietnam', vi: 'Đà Nẵng, Việt Nam' },
     start: 'Apr 2024',
     end: { en: 'Jan 2026', vi: 'Th1 2026' },

@@ -20,7 +20,7 @@ export const education: Education[] = [
     degree: { en: "Master's student", vi: 'Học viên Cao học' },
     field: { en: 'Computer Science', vi: 'Khoa học Máy tính' },
     start: 'Oct 2025',
-    end: { en: 'Apr 2026 (expected)', vi: 'Th4 2026 (dự kiến)' },
+    end: { en: 'Present', vi: 'Hiện tại' },
     current: true,
   },
   {
