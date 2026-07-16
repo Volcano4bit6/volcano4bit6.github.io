@@ -1,0 +1,40 @@
+---
+title: 'The AI Great Leap Forward'
+description: 'A short take on Han-chung Lee’s essay: why top-down "everyone must do AI" mandates echo China’s Great Leap Forward - and produce activity instead of outcomes.'
+pubDate: 2026-07-16
+tags: ['AI', 'Strategy', 'Evaluation']
+lang: 'en'
+draft: false
+---
+
+I recently read [*The AI Great Leap Forward*](https://leehanchung.github.io/blogs/2026/04/05/the-ai-great-leap-forward/) by Han-chung Lee, and the historical parallel it draws has stuck with me. Today's top-down "AI transformation" mandates look a lot like China's Great Leap Forward - a lot of frantic activity, measured by quota, that quietly produces nothing usable.
+
+## The backyard furnaces
+
+In 1958, Mao ordered every village in China to produce steel. Farmers with no metallurgy experience melted their own cooking pots in backyard furnaces and reported spectacular numbers. The steel was brittle and useless. Meanwhile the crops nobody was harvesting rotted in the fields, and around 30 million people starved. The belief was that conviction plus quotas could stand in for expertise. It couldn't.
+
+## The 2026 version
+
+Swap "steel" for "AI" and you get today. Company after company issues a top-down mandate: every function, every team, every individual contributor must "close the AI gap." It doesn't matter that nobody on the team has trained a model, designed an evaluation, or debugged a retrieval system - conviction is treated as enough. Entire departments stitch together n8n and workflow canvases, fire prompts into models with zero evaluation, and report it as transformation.
+
+## Merchants of complexity
+
+The tools make this easy, and that is the trap. They sell visual simplicity while generating spaghetti underneath. A drag-and-drop canvas makes it trivial to chain ten LLM calls together and impossibly hard to debug why the eighth one hallucinates on Tuesdays. The dashboard is green, the demo works, and nobody is measuring whether any of it produces a correct result - right up until someone downstream tries to use the output.
+
+## My take, as an engineer
+
+The missing ingredient is the same in both stories: evaluation. Steel you never stress-test is just melted pots. An LLM chain you never evaluate is just a very confident random-number generator. A mandate can create motion, but it cannot create competence - and if you can't tell whether the thing works, motion is all you get.
+
+What I try to do instead, and what I'd suggest to you:
+
+- Start from a real problem and a way to measure success, not from "we must use AI."
+- Build an eval before you scale a pipeline. If you can't score it, you can't trust it.
+- Keep people with actual expertise in the loop. Conviction doesn't debug the eighth node.
+
+AI is a genuinely powerful lever. But a lever with no measurement attached is just a faster way to produce useless steel.
+
+## Source
+
+This post is a summary and personal reflection. The central argument - the Great Leap Forward parallel, the "merchants of complexity", and the missing evaluation - comes from the original essay. Please read it in full:
+
+- Han-chung Lee, "The AI Great Leap Forward", 5 April 2026. Available at: [leehanchung.github.io/blogs/2026/04/05/the-ai-great-leap-forward](https://leehanchung.github.io/blogs/2026/04/05/the-ai-great-leap-forward/)
