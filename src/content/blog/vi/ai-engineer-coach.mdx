@@ -1,0 +1,44 @@
+---
+title: 'Tự huấn luyện việc vibe coding, mỗi thứ Hai'
+description: 'Cách mình dùng AI Engineer Coach của Microsoft - một extension VS Code chạy cục bộ, biến log phiên làm việc AI thành dashboard - để giữ cho việc code cùng AI luôn trung thực.'
+pubDate: 2026-07-17
+tags: ['AI', 'Coding Agents', 'Productivity']
+lang: 'vi'
+draft: false
+---
+
+Mình từng viết về việc ở lại trong vòng lặp khi code cùng AI, và về chuyện thứ còn thiếu gần như luôn là phép đo. Câu hỏi tiếp theo rất tự nhiên: làm sao bạn thực sự đo được cách mình dùng AI? Gần đây mình bắt đầu dùng một công cụ làm đúng điều đó - [AI Engineer Coach](https://github.com/microsoft/AI-Engineering-Coach) của Microsoft - và nó đã lặng lẽ thay đổi cách mình làm việc.
+
+## Nó là gì
+
+AI Engineer Coach là một extension VS Code chạy **cục bộ** (cũng chạy được dưới dạng canvas cho GitHub Copilot). Nó đọc log các phiên code cùng AI trên máy bạn và biến thành insight - và quan trọng nhất, **không dữ liệu nào rời khỏi máy của bạn**. Công cụ hướng tới bất kỳ ai đang dùng trợ lý code (Copilot, Claude, và những cái tên khác) muốn hiểu và cải thiện thói quen agentic của mình, thay vì chỉ *cảm thấy* năng suất.
+
+Các tính năng chia thành bốn nhóm:
+
+- **Observe** - Dashboard với điểm thực hành, xu hướng theo tuần và hoạt động theo ngày; Timeline kiểu Gantt; và bộ sưu tập "Coding Moments".
+- **Measure** - sản lượng code theo ngôn ngữ và mô hình, heatmap hoạt động 7×24 kèm tín hiệu cân bằng công việc - cuộc sống, và Burndown token.
+- **Improve** - 45 quy tắc anti-pattern có thể chỉnh sửa (chất lượng prompt, vệ sinh phiên làm việc, review code, quản lý ngữ cảnh), trình soạn rule và playground, skill finder, cùng các kiểm tra context-health.
+- **Level Up** - quiz, thành tựu theo XP, và thẻ thống kê chia sẻ được.
+
+## Mình dùng nó thế nào
+
+Mình không mở tất cả những thứ đó mỗi ngày - làm vậy thì lại thành một kiểu slop khác. Thay vào đó mình biến nó thành một nghi thức nhỏ:
+
+**Mỗi thứ Hai, mình mở Dashboard và xem lại tuần trước.**
+
+Mười lăm phút, một lần mỗi tuần. Mình nhìn ba thứ:
+
+1. **Xu hướng** - điểm thực hành đang đi lên hay đi xuống, và vì sao?
+2. **Patterns** - heatmap 7×24 cho mình biết lúc nào mình thực sự code, và liệu mình có dựa vào agent lúc 1 giờ sáng trong khi đáng lẽ nên đi ngủ.
+3. **Burndown** - token của mình đã đi đâu, và liệu những phiên tốn kém có phải là những phiên có giá trị.
+
+Chính vòng lặp hàng tuần đó mới là điều cốt lõi. Nó là khác biệt giữa việc *cảm thấy* mình đang dùng AI tốt và việc *biết* điều đó. Khi một thói quen xấu xuất hiện - buông xuôi nhận thức quá đà, những prompt mình không bao giờ review, một workflow mình không bao giờ đánh giá - nó hiện lên trên biểu đồ trước khi hiện lên trong codebase.
+
+## Vì sao nó hợp với mình
+
+Công cụ này hiệu quả vì cùng lý do với ý tưởng "đừng giao phó sự hiểu biết": nó giữ một con người trong vòng lặp cùng với dữ liệu thật. Nó không code hộ mình và cũng không chấm điểm mình ngay lúc đó - nó chỉ giơ một tấm gương lên mỗi tuần một lần và để mình tự chỉnh hướng. Nếu bạn code cùng AI mỗi ngày, mình thật lòng khuyên bạn dành cho nó một khung giờ thứ Hai trên lịch.
+
+## Nguồn
+
+- Microsoft, "AI Engineer Coach" (extension VS Code, giấy phép MIT). Repository: [github.com/microsoft/AI-Engineering-Coach](https://github.com/microsoft/AI-Engineering-Coach)
+- Để thử: clone repo, chạy `npm ci && npm run package`, cài file `.vsix` sinh ra, rồi chạy lệnh "AI Engineer Coach: Open Dashboard" (VS Code 1.115+).
