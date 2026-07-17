@@ -1,0 +1,44 @@
+---
+title: 'Coaching My Own Vibe Coding, Every Monday'
+description: 'How I use Microsoft’s AI Engineer Coach - a local-first VS Code extension that turns your AI session logs into a dashboard - to keep my AI-assisted coding honest.'
+pubDate: 2026-07-17
+tags: ['AI', 'Coding Agents', 'Productivity']
+lang: 'en'
+draft: false
+---
+
+I've written before about staying in the loop when you code with AI, and about how the missing ingredient is almost always measurement. The obvious next question is: how do you actually measure your own AI usage? Recently I started using a tool that does exactly that - Microsoft's [AI Engineer Coach](https://github.com/microsoft/AI-Engineering-Coach) - and it has quietly changed how I work.
+
+## What it is
+
+AI Engineer Coach is a **local-first** VS Code extension (it also runs as a GitHub Copilot app canvas). It reads your local AI coding session logs and turns them into insights - and crucially, **no data leaves your machine**. It's aimed at anyone using coding assistants (Copilot, Claude, and friends) who wants to understand and improve their own agentic practice instead of just feeling productive.
+
+The features are grouped into four areas:
+
+- **Observe** - a Dashboard with practice scores, weekly trends and daily activity; a Gantt-style session Timeline; and a "Coding Moments" gallery.
+- **Measure** - code output by language and model, a 7×24 activity heatmap with work-life-balance signals, and a token Burndown.
+- **Improve** - 45 editable anti-pattern rules (prompt quality, session hygiene, code review, context management), a rule editor and playground, a skill finder, and context-health checks.
+- **Level Up** - quizzes, XP-based achievements, and shareable stat cards.
+
+## How I actually use it
+
+I don't open all of that every day - that would be its own kind of slop. Instead I've turned it into a small ritual:
+
+**Every Monday, I open the Dashboard and review the previous week.**
+
+Fifteen minutes, once a week. I look at three things:
+
+1. **Trends** - is my practice score drifting up or down, and why?
+2. **Patterns** - the 7×24 heatmap tells me when I was actually coding, and whether I was leaning on the agent at 1am when I should have been asleep.
+3. **Burndown** - where my tokens went, and whether the expensive sessions were the valuable ones.
+
+That weekly loop is the whole point. It's the difference between *feeling* like I'm using AI well and *knowing* it. When a bad habit shows up - too much cognitive surrender, prompts I never reviewed, a workflow I never evaluated - it shows up on the chart before it shows up in my codebase.
+
+## Why it works for me
+
+The tool is effective for the same reason the "don't outsource your understanding" idea is: it keeps a human in the loop with real data. It doesn't code for me and it doesn't grade me in the moment - it just holds up a mirror once a week and lets me correct course. If you code with AI every day, I'd genuinely recommend giving it a Monday slot on your calendar.
+
+## Source
+
+- Microsoft, "AI Engineer Coach" (VS Code extension, MIT license). Repository: [github.com/microsoft/AI-Engineering-Coach](https://github.com/microsoft/AI-Engineering-Coach)
+- To try it: clone the repo, run `npm ci && npm run package`, install the generated `.vsix`, then run the "AI Engineer Coach: Open Dashboard" command (VS Code 1.115+).
