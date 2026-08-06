@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">From vulnerability and threat to business risk</title>
+  <desc id="desc">An asset and its exposure are affected when a threat event exploits a vulnerability, creating technical impact and business risk. Controls can reduce exposure, likelihood, or impact.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#11111a"/><stop offset="1" stop-color="#09090d"/></linearGradient>
+    <linearGradient id="risk" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b87f8"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7772dd"/></marker>
+  </defs>
+  <rect width="1200" height="650" rx="24" fill="url(#bg)"/><rect width="1200" height="650" rx="24" fill="url(#grid)"/><rect x="1" y="1" width="1198" height="648" rx="23" fill="none" stroke="#2b2b35"/>
+  <text x="54" y="68" fill="#8b87f8" font-family="ui-monospace, monospace" font-size="17" letter-spacing="2">RISK IS A SCENARIO, NOT A SCANNER FINDING</text>
+  <text x="54" y="112" fill="#f0f0f4" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Translate a technical weakness into business impact</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <g transform="translate(48 238)"><rect width="170" height="150" rx="18" fill="#171720" stroke="#3a3863"/><text x="85" y="55" text-anchor="middle" fill="#f0f0f4" font-size="22" font-weight="750">Asset</text><text x="85" y="89" text-anchor="middle" fill="#9a9aa6" font-size="15">data, service,</text><text x="85" y="113" text-anchor="middle" fill="#9a9aa6" font-size="15">reputation</text></g>
+    <g transform="translate(268 238)"><rect width="170" height="150" rx="18" fill="#171720" stroke="#3a3863"/><text x="85" y="55" text-anchor="middle" fill="#f0f0f4" font-size="22" font-weight="750">Exposure</text><text x="85" y="89" text-anchor="middle" fill="#9a9aa6" font-size="15">reachable paths,</text><text x="85" y="113" text-anchor="middle" fill="#9a9aa6" font-size="15">attack surface</text></g>
+    <g transform="translate(518 174)"><rect width="186" height="108" rx="18" fill="#1b1a2c" stroke="#55519f"/><text x="93" y="45" text-anchor="middle" fill="#b9b6ff" font-size="20" font-weight="750">Threat event</text><text x="93" y="76" text-anchor="middle" fill="#9a9aa6" font-size="15">attempts exploitation</text></g>
+    <g transform="translate(518 344)"><rect width="186" height="108" rx="18" fill="#1b1a2c" stroke="#55519f"/><text x="93" y="45" text-anchor="middle" fill="#b9b6ff" font-size="20" font-weight="750">Vulnerability</text><text x="93" y="76" text-anchor="middle" fill="#9a9aa6" font-size="15">weakness or condition</text></g>
+    <g transform="translate(760 238)"><rect width="170" height="150" rx="18" fill="#171720" stroke="#287b70"/><text x="85" y="55" text-anchor="middle" fill="#f0f0f4" font-size="22" font-weight="750">Impact</text><text x="85" y="89" text-anchor="middle" fill="#9a9aa6" font-size="15">loss of CIA, cost,</text><text x="85" y="113" text-anchor="middle" fill="#9a9aa6" font-size="15">trust, compliance</text></g>
+    <g transform="translate(980 238)"><rect width="170" height="150" rx="18" fill="url(#risk)"/><text x="85" y="55" text-anchor="middle" fill="#fff" font-size="25" font-weight="800">Risk</text><text x="85" y="90" text-anchor="middle" fill="#f4ffff" font-size="16">likelihood</text><text x="85" y="116" text-anchor="middle" fill="#f4ffff" font-size="16">× impact</text></g>
+  </g>
+
+  <g fill="none" stroke="#7772dd" stroke-width="3" marker-end="url(#arrow)">
+    <path d="M222 313H260"/><path d="M442 313H490"/><path d="M708 313H752"/><path d="M934 313H972"/>
+    <path d="M611 286V303"/><path d="M611 340V323"/>
+  </g>
+  <circle cx="611" cy="313" r="20" fill="#29274e" stroke="#7772dd"/><path d="M602 313l7 7 13-16" fill="none" stroke="#c8c5ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g transform="translate(48 500)" font-family="Inter, Arial, sans-serif">
+    <rect width="1102" height="88" rx="18" fill="#121a1a" stroke="#234e49"/>
+    <text x="28" y="36" fill="#2dd4bf" font-family="ui-monospace, monospace" font-size="15" letter-spacing="1.2">CONTROLS CHANGE THE EQUATION</text>
+    <text x="28" y="65" fill="#d7d7de" font-size="17">Reduce exposure</text><text x="246" y="65" fill="#6f6f7c" font-size="17">→</text><text x="285" y="65" fill="#d7d7de" font-size="17">reduce likelihood</text><text x="522" y="65" fill="#6f6f7c" font-size="17">→</text><text x="560" y="65" fill="#d7d7de" font-size="17">reduce impact</text><text x="756" y="65" fill="#6f6f7c" font-size="17">→</text><text x="794" y="65" fill="#f0f0f4" font-size="17" font-weight="700">lower residual risk</text>
+  </g>
+</svg>

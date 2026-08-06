@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Four risk responses and the residual-risk monitoring loop</title>
+  <desc id="desc">Inherent risk is assessed and treated by avoiding, mitigating, transferring or sharing, or accepting it. Residual risk must fit approved tolerance and be monitored over time.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#11111a"/><stop offset="1" stop-color="#09090d"/></linearGradient>
+    <linearGradient id="result" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6761d9"/><stop offset="1" stop-color="#159d8d"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7772dd"/></marker>
+  </defs>
+  <rect width="1200" height="720" rx="24" fill="url(#bg)"/><rect width="1200" height="720" rx="24" fill="url(#grid)"/><rect x="1" y="1" width="1198" height="718" rx="23" fill="none" stroke="#2b2b35"/>
+  <text x="54" y="68" fill="#8b87f8" font-family="ui-monospace, monospace" font-size="17" letter-spacing="2">RISK RESPONSE</text>
+  <text x="54" y="112" fill="#f0f0f4" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">The goal is acceptable residual risk—not zero risk</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <g transform="translate(52 174)"><rect width="200" height="116" rx="18" fill="#1b1a2c" stroke="#55519f"/><text x="100" y="48" text-anchor="middle" fill="#f0f0f4" font-size="21" font-weight="750">Inherent risk</text><text x="100" y="78" text-anchor="middle" fill="#9a9aa6" font-size="15">before treatment</text></g>
+    <g transform="translate(320 162)"><path d="M100 0L200 70L100 140L0 70Z" fill="#171720" stroke="#55519f" stroke-width="2"/><text x="100" y="64" text-anchor="middle" fill="#f0f0f4" font-size="19" font-weight="750">Assess context</text><text x="100" y="89" text-anchor="middle" fill="#9a9aa6" font-size="14">likelihood × impact</text></g>
+  </g>
+  <path d="M258 232H310" fill="none" stroke="#7772dd" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g transform="translate(570 146)" font-family="Inter, Arial, sans-serif">
+    <g><rect width="258" height="130" rx="18" fill="#171720" stroke="#3a3863"/><text x="24" y="40" fill="#b9b6ff" font-size="20" font-weight="800">AVOID</text><text x="24" y="76" fill="#d7d7de" font-size="16">Remove the activity</text><text x="24" y="102" fill="#8d8d99" font-size="14">or risky business logic</text></g>
+    <g transform="translate(288 0)"><rect width="258" height="130" rx="18" fill="#171720" stroke="#287b70"/><text x="24" y="40" fill="#70e1d1" font-size="20" font-weight="800">MITIGATE</text><text x="24" y="76" fill="#d7d7de" font-size="16">Add controls to reduce</text><text x="24" y="102" fill="#8d8d99" font-size="14">likelihood or impact</text></g>
+    <g transform="translate(0 160)"><rect width="258" height="130" rx="18" fill="#171720" stroke="#3a3863"/><text x="24" y="40" fill="#b9b6ff" font-size="20" font-weight="800">TRANSFER / SHARE</text><text x="24" y="76" fill="#d7d7de" font-size="16">Contract, insure, or</text><text x="24" y="102" fill="#8d8d99" font-size="14">allocate with a provider</text></g>
+    <g transform="translate(288 160)"><rect width="258" height="130" rx="18" fill="#171720" stroke="#287b70"/><text x="24" y="40" fill="#70e1d1" font-size="20" font-weight="800">ACCEPT</text><text x="24" y="76" fill="#d7d7de" font-size="16">Business owner approves</text><text x="24" y="102" fill="#8d8d99" font-size="14">within risk tolerance</text></g>
+  </g>
+
+  <g fill="none" stroke="#7772dd" stroke-width="3" marker-end="url(#arrow)"><path d="M520 232H558"/><path d="M520 232V376H558"/></g>
+
+  <g transform="translate(184 518)" font-family="Inter, Arial, sans-serif">
+    <rect width="832" height="106" rx="22" fill="url(#result)"/>
+    <text x="416" y="44" text-anchor="middle" fill="#fff" font-size="26" font-weight="800">Residual risk ≤ approved tolerance</text>
+    <text x="416" y="76" text-anchor="middle" fill="#ebfffc" font-size="17">document the owner · record the decision · monitor change</text>
+  </g>
+  <g fill="none" stroke="#7772dd" stroke-width="3" marker-end="url(#arrow)"><path d="M700 446V508"/><path d="M600 638C460 690 270 664 184 620"/></g>
+  <text x="54" y="686" fill="#6f6f7c" font-family="ui-monospace, monospace" font-size="13">Transfer changes allocation; it does not erase accountability or third-party risk.</text>
+</svg>

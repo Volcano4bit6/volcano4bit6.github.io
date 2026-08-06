@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850" role="img" aria-labelledby="title desc">
+  <title id="title">CIA security objectives and AAA access controls</title>
+  <desc id="desc">The CIA triad surrounds a trustworthy and usable system, while authentication, authorization, and accounting form an access-control layer below.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#11111a"/><stop offset="1" stop-color="#09090d"/></linearGradient>
+    <linearGradient id="tri" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b87f8"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
+  </defs>
+  <rect width="1200" height="850" rx="24" fill="url(#bg)"/><rect width="1200" height="850" rx="24" fill="url(#grid)"/><rect x="1" y="1" width="1198" height="848" rx="23" fill="none" stroke="#2b2b35"/>
+  <text x="54" y="68" fill="#8b87f8" font-family="ui-monospace, monospace" font-size="17" letter-spacing="2">SECURITY FUNDAMENTALS</text>
+  <text x="54" y="112" fill="#f0f0f4" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">CIA defines the objectives. AAA governs access.</text>
+
+  <path d="M600 214L287 515H913Z" fill="#171720" fill-opacity=".6" stroke="url(#tri)" stroke-width="4"/>
+  <circle cx="600" cy="230" r="84" fill="#1b1a2c" stroke="#6e69db" stroke-width="2"/>
+  <circle cx="290" cy="510" r="84" fill="#1b1a2c" stroke="#6e69db" stroke-width="2"/>
+  <circle cx="910" cy="510" r="84" fill="#132824" stroke="#259d8e" stroke-width="2"/>
+  <g font-family="Inter, Arial, sans-serif" text-anchor="middle">
+    <text x="600" y="223" fill="#b9b6ff" font-size="38" font-weight="800">C</text><text x="600" y="253" fill="#f0f0f4" font-size="17" font-weight="650">Confidentiality</text><text x="600" y="277" fill="#9a9aa6" font-size="14">authorized disclosure</text>
+    <text x="290" y="503" fill="#b9b6ff" font-size="38" font-weight="800">I</text><text x="290" y="533" fill="#f0f0f4" font-size="17" font-weight="650">Integrity</text><text x="290" y="557" fill="#9a9aa6" font-size="14">authorized change</text>
+    <text x="910" y="503" fill="#70e1d1" font-size="38" font-weight="800">A</text><text x="910" y="533" fill="#f0f0f4" font-size="17" font-weight="650">Availability</text><text x="910" y="557" fill="#9a9aa6" font-size="14">timely, reliable access</text>
+    <circle cx="600" cy="403" r="102" fill="#101016" stroke="#393945"/>
+    <text x="600" y="390" fill="#f0f0f4" font-size="22" font-weight="750">TRUSTWORTHY</text><text x="600" y="419" fill="#f0f0f4" font-size="22" font-weight="750">+ USABLE</text><text x="600" y="449" fill="#8f8f9a" font-size="14">priorities follow context</text>
+  </g>
+
+  <text x="54" y="650" fill="#2dd4bf" font-family="ui-monospace, monospace" font-size="15" letter-spacing="1.5">AAA ACCESS LAYER</text>
+  <g transform="translate(54 674)" font-family="Inter, Arial, sans-serif">
+    <g><rect width="340" height="112" rx="16" fill="#171720" stroke="#3a3863"/><text x="24" y="39" fill="#b9b6ff" font-size="18" font-weight="750">AUTHENTICATION</text><text x="24" y="72" fill="#d8d8df" font-size="17">Who are you?</text><text x="24" y="96" fill="#858590" font-size="14">verify identity</text></g>
+    <g transform="translate(376 0)"><rect width="340" height="112" rx="16" fill="#171720" stroke="#3a3863"/><text x="24" y="39" fill="#b9b6ff" font-size="18" font-weight="750">AUTHORIZATION</text><text x="24" y="72" fill="#d8d8df" font-size="17">What may you do?</text><text x="24" y="96" fill="#858590" font-size="14">enforce permissions</text></g>
+    <g transform="translate(752 0)"><rect width="340" height="112" rx="16" fill="#132824" stroke="#287b70"/><text x="24" y="39" fill="#70e1d1" font-size="18" font-weight="750">ACCOUNTING</text><text x="24" y="72" fill="#d8d8df" font-size="17">What happened?</text><text x="24" y="96" fill="#858590" font-size="14">logs → audit → accountability</text></g>
+  </g>
+  <text x="600" y="828" text-anchor="middle" fill="#6f6f7c" font-family="ui-monospace, monospace" font-size="13">CIA priorities are contextual—not required to be equal for every system.</text>
+</svg>
