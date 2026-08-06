@@ -1,0 +1,168 @@
+---
+title: 'Đừng chỉ fix vulnerability: hãy học cách quản trị rủi ro'
+description: 'CIA, AAA, vulnerability, threat, exposure, control và bốn cách xử lý risk - một nền tảng thực dụng để kỹ sư chuyển từ săn lỗi sang giảm business risk.'
+pubDate: 2026-08-06
+tags: ['Security', 'Risk Management', 'Software Engineering']
+lang: 'vi'
+draft: false
+---
+
+Ở [bài trước](/vi/blog/ai-changed-security-clock/), mình viết về cách AI đang làm cho việc tìm và khai thác vulnerability chạy ở một quy mô mới. Nhưng càng tìm được nhiều lỗi, ta càng cần trả lời một câu khó hơn: lỗi nào thực sự đáng ưu tiên?
+
+Sau khi học một khóa security, phản xạ đầu tiên của nhiều developer là nhìn đâu cũng thấy vulnerability. Header này thiếu. Package kia có CVE. Endpoint nọ chưa giới hạn đủ chặt. Mọi finding đều đỏ, và cảm giác an toàn chỉ xuất hiện khi con số trở về zero.
+
+Nhưng một security team thực tế hiếm khi có đủ người, thời gian hay tiền để xử lý 100% mọi thứ cùng lúc. Quan trọng hơn, không phải hai vulnerability cùng severity kỹ thuật sẽ tạo ra cùng một hậu quả cho business. Một lỗi lộ version trên trang thử nghiệm nội bộ và một lỗi sửa được số tiền của giao dịch có thể cùng xuất hiện trong scanner, nhưng rõ ràng chúng không đáng được xếp cùng hàng.
+
+Đó là lúc ta phải chuyển câu hỏi từ:
+
+> "Hệ thống có bao nhiêu vulnerability?"
+
+sang:
+
+> **"Kịch bản nào có thể xảy ra, nó gây hại gì cho business, và chúng ta sẽ làm gì với rủi ro đó?"**
+
+Đây là khác biệt giữa vulnerability management và risk management.
+
+## Bắt đầu bằng CIA, nhưng đừng thờ phụng tam giác
+
+Nền tảng quen thuộc nhất của information security là CIA Triad:
+
+- **Confidentiality - tính bí mật:** thông tin không bị truy cập hay tiết lộ cho người không được phép.
+- **Integrity - tính toàn vẹn:** thông tin và hệ thống không bị thay đổi hoặc phá hủy trái phép. Đây không chỉ là dữ liệu "không đổi trên đường từ A đến B", mà còn bao gồm việc thay đổi phải đúng, có chủ đích và có thể tin cậy trong toàn bộ vòng đời.
+- **Availability - tính sẵn sàng:** người được phép có thể truy cập thông tin và dịch vụ một cách kịp thời, đáng tin cậy.
+
+Các định nghĩa này bám theo [FIPS 199 của NIST](https://doi.org/10.6028/NIST.FIPS.199). CIA cho ta ba câu hỏi đầu tiên khi nhìn vào một asset: ai không được thấy nó, ai không được sửa nó, và khi nào nó bắt buộc phải hoạt động?
+
+![CIA Triad và lớp kiểm soát truy cập AAA](/blog/ai-security/cia-aaa-foundation.svg)
+
+*CIA mô tả mục tiêu bảo vệ; AAA giúp kiểm soát và truy vết quyền truy cập.*
+
+Ta thường vẽ CIA thành một tam giác đều để nhắc mình đừng bỏ quên đỉnh nào. Nhưng "ba cạnh phải luôn bằng nhau" không phải quy tắc của NIST, và cũng không đúng cho mọi hệ thống. Một public status page gần như không có dữ liệu bí mật nhưng availability rất quan trọng. Một key vault đặt confidentiality và integrity cực cao. Hệ thống chuyển tiền ưu tiên mạnh integrity của số tiền, người nhận và trạng thái giao dịch, đồng thời vẫn phải duy trì availability đủ tốt.
+
+Điều cần cân bằng không chỉ là ba chữ CIA, mà còn có usability, chi phí và business objective. Nếu mỗi giao dịch 10.000 đồng đều cần gặp trực tiếp ba người phê duyệt thì confidentiality và integrity có thể tăng, nhưng sản phẩm gần như không còn dùng được. Nếu bỏ hết bước xác thực để trải nghiệm thật mượt, rủi ro gian lận lại vượt ngưỡng business chịu được.
+
+Security giỏi không tối đa hóa một đỉnh. Security giỏi **chọn mức bảo vệ phù hợp với context**.
+
+## AAA: chữ A cuối là Accounting
+
+Một lớp nền tảng khác thường được gọi là AAA:
+
+1. **Authentication:** bạn là ai?
+2. **Authorization:** bạn được phép làm gì?
+3. **Accounting:** bạn đã sử dụng tài nguyên nào, lúc nào và kết quả ra sao?
+
+Theo cách dùng chuẩn trong [IETF RFC 2989](https://www.rfc-editor.org/rfc/rfc2989), chữ A thứ ba là *Accounting*, không phải *Accountability*. Nhưng hai khái niệm có quan hệ rất gần: accounting tạo record; log và audit tốt giúp tổ chức quy trách nhiệm, điều tra và chứng minh điều gì đã xảy ra.
+
+Đây cũng là phần developer rất dễ bỏ qua. Ta làm login, viết RBAC, rồi log một dòng chung chung như `request failed`. Đến khi incident xảy ra, không ai biết identity nào đã gọi, quyền nào được dùng, asset nào bị chạm tới, từ đâu và vào lúc nào. NIST dành hẳn một control family cho [Audit and Accountability](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/800-171r3/NIST.SP.800-171r3.html): chọn event cần log, tạo record đủ nội dung, bảo vệ log khỏi sửa/xóa, rồi thật sự review và correlate chúng.
+
+Logging không phải việc phụ để debug. Nó là một security control.
+
+## Từ năm khái niệm đến một risk scenario
+
+Trong buổi webinar, năm từ được nhắc đi nhắc lại là vulnerability, threat, risk, exposure và control. Mình thấy cách nhớ tốt nhất không phải học từng định nghĩa riêng, mà nối chúng thành một câu chuyện.
+
+Trước hết phải có một **asset** đáng bảo vệ: dữ liệu khách hàng, payment service, source code, credential, khả năng vận hành hay uy tín công ty.
+
+- **Vulnerability** là weakness hoặc điều kiện bên trong khiến asset có thể bị tổn hại: SQL injection, quyền quá rộng, secret sống quá lâu, dataset parser chạy code không tin cậy.
+- **Threat** là nguồn hoặc sự kiện có khả năng khai thác weakness đó: attacker bên ngoài, insider, malware, một AI agent có tool access, hay thậm chí lỗi vận hành.
+- **Exposure** mô tả asset và attack path bị phơi ra đến đâu. Internet-facing endpoint, public bucket, metadata service mở cho pod, quá nhiều egress route hay credential dùng được ở nhiều cluster đều làm attack surface lớn hơn. [OWASP Attack Surface Analysis](https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html) định nghĩa attack surface qua các đường dữ liệu/lệnh đi vào và đi ra, cùng code và data bảo vệ những đường đó.
+- **Risk** là khả năng một threat event gây hậu quả, kết hợp giữa likelihood và impact. [NIST SP 800-30 Rev. 1](https://doi.org/10.6028/NIST.SP.800-30r1) dùng threat, vulnerability, likelihood và impact để đánh giá risk; OWASP thường tóm tắt thực dụng thành `Risk = Likelihood × Impact`.
+- **Control** là safeguard hay countermeasure làm giảm likelihood, giảm impact, hoặc cả hai.
+
+![Chuỗi từ asset, exposure, threat và vulnerability đến business risk](/blog/ai-security/risk-chain.svg)
+
+*Một vulnerability không tự động bằng một risk nghiêm trọng. Ta cần threat scenario, exposure và business impact.*
+
+Ghi chú webinar gọi vulnerability là "điều kiện cần" và threat là "điều kiện đủ". Cách nói này dễ nhớ nhưng hơi cứng. Threat tồn tại chưa chắc khai thác thành công; vulnerability tồn tại chưa chắc có đường tiếp cận; và ngay cả khi exploit thành công, impact còn phụ thuộc asset cùng các control phía sau. Cách an toàn hơn là viết một **risk scenario** hoàn chỉnh:
+
+> Một attacker trên Internet (**threat**) có thể gọi endpoint import đang public (**exposure**), lợi dụng template injection trong parser (**vulnerability**) để chạy code trong production pod, lấy credential và sửa dữ liệu giao dịch (**technical impact**), dẫn đến thất thoát tài chính, vi phạm compliance và mất niềm tin khách hàng (**business impact**).
+
+Khi viết được câu đó, team mới biết mình đang giảm cái gì.
+
+## Tech risk phải được dịch thành business risk
+
+Security engineer thường nói bằng CVE, CVSS, privilege escalation và RCE. Client hay business owner nói bằng doanh thu, downtime, phạt pháp lý, SLA và uy tín. Không bên nào sai; họ chỉ đang đứng ở hai đầu của cùng một risk scenario.
+
+[OWASP Risk Rating Methodology](https://owasp.org/www-community/OWASP_Risk_Rating_Methodology) nhấn mạnh rằng business impact quan trọng hơn technical impact khi ra quyết định. Một finding technical high có thể là business low trong một hệ thống cô lập không chứa dữ liệu thật. Ngược lại, một lỗi trông vừa phải trong luồng settlement có thể tạo tổn thất rất lớn.
+
+Vì vậy BA, PO, BrSE, domain expert và business owner không đứng ngoài security. Họ là những người giúp trả lời:
+
+- Asset này đáng giá bao nhiêu?
+- Downtime bao lâu thì bắt đầu vi phạm cam kết?
+- Dữ liệu này lộ ra thì ai bị ảnh hưởng?
+- Sai một chữ số ở đây sẽ gây ra chuỗi hậu quả nào?
+
+Security team mang hiểu biết về technical likelihood. Người hiểu domain mang hiểu biết về business impact. Risk chỉ có nghĩa khi hai phía gặp nhau.
+
+## Control phải có nhiều lớp
+
+Một cách phân loại dễ dùng trong thực tế là nhìn control qua ba lớp. [Hướng dẫn non-technical controls của NIST](https://pages.nist.gov/FederalProfile-8259A/nontechnical/) tách administrative và physical controls, còn [technical controls](https://csrc.nist.gov/glossary/term/Technical_Controls) được thực thi chủ yếu bởi cơ chế trong hardware, software hoặc firmware:
+
+- **Administrative control:** policy, quy trình, phân công trách nhiệm, training. Ví dụ công ty quy định không dùng máy cá nhân truy cập hệ thống nội bộ.
+- **Technical control:** cơ chế được thực thi bằng hardware, software hoặc firmware. Ví dụ conditional access chỉ cho thiết bị đã enroll và đạt compliance truy cập VPN.
+- **Physical control:** thẻ ra vào, khóa, camera, bảo vệ, biometric reader ở khu vực nhạy cảm.
+
+Tên nhóm có thể khác giữa các framework - NIST thường dùng management, operational và technical controls - nhưng bài học giống nhau: **policy không có enforcement thì rất yếu**. Nếu công ty chỉ gửi email "không dùng máy cá nhân" nhưng hệ thống vẫn chấp nhận mọi thiết bị và không ghi nhận truy cập, administrative control đang đứng một mình. Technical control biến ý định thành hành vi bắt buộc; logging giúp phát hiện ngoại lệ; physical control bảo vệ nơi hệ thống thực sự tồn tại.
+
+Ta không cần nhồi mọi control vào mọi risk. Ta cần một tập control vừa đủ, hỗ trợ lẫn nhau và phù hợp với impact.
+
+## Bốn cách xử lý risk
+
+Sau khi hiểu risk, tổ chức có bốn lựa chọn phổ biến. [NIST SP 800-39](https://doi.org/10.6028/NIST.SP.800-39) dùng năm từ accept, avoid, mitigate, share và transfer; trong thực hành, share và transfer thường được gom thành một nhóm.
+
+![Bốn cách xử lý risk và vòng lặp residual risk](/blog/ai-security/risk-treatment-loop.svg)
+
+### 1. Avoid - tránh
+
+Bỏ hoạt động hay business logic tạo ra risk. Nếu tính năng upload file tùy ý không tạo đủ giá trị nhưng mở một attack surface lớn, bỏ tính năng có thể tốt hơn xây mười lớp sandbox quanh nó.
+
+### 2. Mitigate - giảm thiểu
+
+Đưa control vào để giảm likelihood hoặc impact: validate input, tách network, dùng short-lived credential, giới hạn egress, rate limit, backup, detection và response automation. Risk không biến mất; phần còn lại gọi là **residual risk**.
+
+### 3. Accept - chấp nhận
+
+Chủ động chấp nhận khi residual risk nằm trong risk tolerance và chi phí xử lý thêm không hợp lý. Đây phải là quyết định có thông tin, được ghi lại và do người có thẩm quyền với business impact phê duyệt - không phải developer tự đóng ticket vì "chắc không sao". Bước Authorize của [NIST Risk Management Framework](https://csrc.nist.gov/Projects/risk-management/about-rmf/authorize-step) đặt quyết định này ở senior official chịu trách nhiệm.
+
+### 4. Transfer hoặc share - chuyển giao hay chia sẻ
+
+Dùng bảo hiểm, hợp đồng, managed service hoặc vendor để phân bổ một phần hậu quả và trách nhiệm vận hành. Nhưng outsource không làm risk biến mất. Data của khách hàng vẫn có thể lộ, dịch vụ của bạn vẫn có thể ngừng, và chính thương hiệu của bạn vẫn phải giải thích với người dùng.
+
+Có một câu đùa lâu đời trong ngành với nhiều phiên bản: "Không ai bị đuổi việc vì chọn một vendor lớn." Nó diễn tả tâm lý phòng thủ của người ra quyết định khá tốt, nhưng không phải risk strategy. Transfer chỉ tốt khi hợp đồng ghi rõ boundary, security requirement, SLA, incident notification, bằng chứng kiểm soát và phần residual risk bên mình vẫn sở hữu. [NIST CSF FAQ](https://www.nist.gov/cyberframework/cybersecurity-framework-faqs-using-framework) cũng nói các outcome của framework vẫn áp dụng dù tổ chức tự vận hành asset hay một bên khác vận hành nó như dịch vụ. Chọn Microsoft hay bất kỳ hyperscaler nào không chuyển hết accountability ra khỏi tổ chức.
+
+## Risk không về zero, nó đi vào một vòng lặp
+
+Sau khi áp dụng control, luôn còn residual risk. Mục tiêu là đưa nó xuống bằng hoặc thấp hơn mức tolerance được business phê duyệt, rồi tiếp tục monitor. NIST định nghĩa [residual risk](https://csrc.nist.gov/glossary/term/residual_risk) là phần risk còn lại sau khi control hoặc risk response đã được áp dụng.
+
+Và mức đó không đứng yên. Một endpoint hôm nay chỉ dùng nội bộ có thể được mở ra Internet vào tháng sau. Credential scope có thể rộng thêm. AI có thể làm một exploit vốn quá đắt trở nên rẻ hơn. Business impact cũng thay đổi khi hệ thống bắt đầu xử lý nhiều tiền hoặc nhiều dữ liệu hơn.
+
+Một workflow ngắn mình muốn giữ cho kỹ sư là:
+
+1. **Biết asset và owner.** Mình đang bảo vệ thứ gì, cho ai?
+2. **Viết risk scenario.** Threat nào khai thác vulnerability nào qua exposure nào?
+3. **Gắn impact vào CIA và business.** Mất bí mật, toàn vẹn hay sẵn sàng sẽ gây hậu quả gì?
+4. **Ước lượng likelihood và impact.** Nêu giả định, đừng giả vờ con số chính xác tuyệt đối.
+5. **Chọn response và control.** Avoid, mitigate, accept hay transfer/share?
+6. **Ghi residual risk và người phê duyệt.** Ai thực sự có quyền chấp nhận hậu quả?
+7. **Monitor thay đổi.** Khi threat, exposure, asset hoặc control đổi, đánh giá lại.
+
+Đó là tư duy risk-based: không cố sửa mọi thứ chỉ để dashboard xanh, mà dành năng lượng cho những đường có thể gây hại lớn nhất.
+
+AI sẽ làm số vulnerability được tìm thấy tăng nhanh hơn. Nếu ta vẫn đo security bằng số ticket đã đóng, ta chỉ chạy nhanh hơn trên một chiếc máy chạy bộ. Điều mình muốn sau webinar này là một bước chuyển khác: từ "lỗi nào đang đỏ" sang "business risk nào đang lớn nhất, ai sở hữu nó, và control nào thật sự làm nó nhỏ đi".
+
+Đó mới là security engineering.
+
+## Tài liệu tham khảo
+
+1. NIST. [*Standards for Security Categorization of Federal Information and Information Systems*, FIPS 199.](https://doi.org/10.6028/NIST.FIPS.199) Tháng 2, 2004.
+2. IETF. [*Network Access AAA Evaluation Criteria*, RFC 2989.](https://www.rfc-editor.org/rfc/rfc2989) Tháng 11, 2000.
+3. NIST. [*Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations*, SP 800-171 Rev. 3, mục 3.3 Audit and Accountability.](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/800-171r3/NIST.SP.800-171r3.html) Tháng 5, 2024.
+4. NIST. [*Guide for Conducting Risk Assessments*, SP 800-30 Rev. 1.](https://doi.org/10.6028/NIST.SP.800-30r1) Tháng 9, 2012.
+5. OWASP. ["Attack Surface Analysis Cheat Sheet."](https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html)
+6. OWASP. ["OWASP Risk Rating Methodology."](https://owasp.org/www-community/OWASP_Risk_Rating_Methodology)
+7. NIST. [*Managing Information Security Risk: Organization, Mission, and Information System View*, SP 800-39.](https://doi.org/10.6028/NIST.SP.800-39) Tháng 3, 2011.
+8. NIST. ["Risk Management Framework - Authorize Step."](https://csrc.nist.gov/Projects/risk-management/about-rmf/authorize-step)
+9. NIST CSRC Glossary. ["Residual Risk."](https://csrc.nist.gov/glossary/term/residual_risk)
+10. NIST. ["IoT Non-Technical Security and Privacy Controls."](https://pages.nist.gov/FederalProfile-8259A/nontechnical/)
+11. NIST CSRC Glossary. ["Technical Controls."](https://csrc.nist.gov/glossary/term/Technical_Controls)
+12. NIST. ["Cybersecurity Framework FAQs - Using the Framework."](https://www.nist.gov/cyberframework/cybersecurity-framework-faqs-using-framework)

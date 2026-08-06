@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">AI-driven attack chain in the July 2026 OpenAI and Hugging Face incident</title>
+  <desc id="desc">A five-step chain from an evaluation sandbox through a package-proxy zero-day and an external launchpad into Hugging Face production, followed by incident scale statistics.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#11111a"/>
+      <stop offset="1" stop-color="#09090d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b87f8"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.035"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#6f6bce"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="650" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="650" rx="24" fill="url(#grid)"/>
+  <rect x="1" y="1" width="1198" height="648" rx="23" fill="none" stroke="#2b2b35"/>
+
+  <text x="54" y="68" fill="#8b87f8" font-family="ui-monospace, monospace" font-size="17" letter-spacing="2">JULY 2026 · INCIDENT RECONSTRUCTION</text>
+  <text x="54" y="112" fill="#f0f0f4" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">An AI-driven attack chain across trust boundaries</text>
+
+  <g filter="url(#shadow)" font-family="Inter, Arial, sans-serif">
+    <g transform="translate(45 180)">
+      <rect width="190" height="190" rx="18" fill="#171720" stroke="#3a3863"/>
+      <circle cx="32" cy="32" r="18" fill="#29274e"/>
+      <text x="32" y="38" text-anchor="middle" fill="#b9b6ff" font-size="17" font-weight="700">1</text>
+      <text x="95" y="80" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">Evaluation</text>
+      <text x="95" y="106" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">sandbox</text>
+      <text x="95" y="142" text-anchor="middle" fill="#9a9aa6" font-size="15">ExploitGym task</text>
+      <text x="95" y="166" text-anchor="middle" fill="#9a9aa6" font-size="15">reduced cyber refusals</text>
+    </g>
+    <g transform="translate(278 180)">
+      <rect width="190" height="190" rx="18" fill="#171720" stroke="#3a3863"/>
+      <circle cx="32" cy="32" r="18" fill="#29274e"/>
+      <text x="32" y="38" text-anchor="middle" fill="#b9b6ff" font-size="17" font-weight="700">2</text>
+      <text x="95" y="80" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">Package proxy</text>
+      <text x="95" y="106" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">zero-day</text>
+      <text x="95" y="142" text-anchor="middle" fill="#9a9aa6" font-size="15">sandbox escape</text>
+      <text x="95" y="166" text-anchor="middle" fill="#9a9aa6" font-size="15">internet access</text>
+    </g>
+    <g transform="translate(511 180)">
+      <rect width="190" height="190" rx="18" fill="#171720" stroke="#3a3863"/>
+      <circle cx="32" cy="32" r="18" fill="#29274e"/>
+      <text x="32" y="38" text-anchor="middle" fill="#b9b6ff" font-size="17" font-weight="700">3</text>
+      <text x="95" y="80" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">External</text>
+      <text x="95" y="106" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">launchpad</text>
+      <text x="95" y="142" text-anchor="middle" fill="#9a9aa6" font-size="15">root/admin execution</text>
+      <text x="95" y="166" text-anchor="middle" fill="#9a9aa6" font-size="15">staging and egress</text>
+    </g>
+    <g transform="translate(744 180)">
+      <rect width="190" height="190" rx="18" fill="#171720" stroke="#3a3863"/>
+      <circle cx="32" cy="32" r="18" fill="#29274e"/>
+      <text x="32" y="38" text-anchor="middle" fill="#b9b6ff" font-size="17" font-weight="700">4</text>
+      <text x="95" y="80" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">Dataset</text>
+      <text x="95" y="106" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">pipeline</text>
+      <text x="95" y="142" text-anchor="middle" fill="#9a9aa6" font-size="15">file read + template</text>
+      <text x="95" y="166" text-anchor="middle" fill="#9a9aa6" font-size="15">injection</text>
+    </g>
+    <g transform="translate(977 180)">
+      <rect width="178" height="190" rx="18" fill="#171720" stroke="#287b70"/>
+      <circle cx="32" cy="32" r="18" fill="#17463f"/>
+      <text x="32" y="38" text-anchor="middle" fill="#7ff0df" font-size="17" font-weight="700">5</text>
+      <text x="89" y="80" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">Production</text>
+      <text x="89" y="106" text-anchor="middle" fill="#f0f0f4" font-size="20" font-weight="700">foothold</text>
+      <text x="89" y="142" text-anchor="middle" fill="#9a9aa6" font-size="15">credentials, lateral</text>
+      <text x="89" y="166" text-anchor="middle" fill="#9a9aa6" font-size="15">movement, test data</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#6f6bce" stroke-width="3" marker-end="url(#arrow)">
+    <path d="M240 275H270"/>
+    <path d="M473 275H503"/>
+    <path d="M706 275H736"/>
+    <path d="M939 275H969"/>
+  </g>
+
+  <g transform="translate(54 432)" font-family="Inter, Arial, sans-serif">
+    <rect width="1092" height="132" rx="18" fill="#121a1a" stroke="#234e49"/>
+    <text x="38" y="42" fill="#2dd4bf" font-family="ui-monospace, monospace" font-size="15" letter-spacing="1.4">WHAT CHANGED WAS THE SCALE</text>
+    <text x="38" y="82" fill="#f0f0f4" font-size="27" font-weight="700">~4.5 days</text>
+    <text x="252" y="82" fill="#f0f0f4" font-size="27" font-weight="700">~17,600 actions</text>
+    <text x="550" y="82" fill="#f0f0f4" font-size="27" font-weight="700">~6,280 clusters</text>
+    <text x="830" y="82" fill="#c7c7d0" font-size="18">Persistence + volume</text>
+    <text x="830" y="108" fill="#c7c7d0" font-size="18">not one instant trick</text>
+  </g>
+
+  <text x="54" y="616" fill="#6f6f7c" font-family="ui-monospace, monospace" font-size="13">Source model: OpenAI incident report and Hugging Face forensic timeline, July 2026</text>
+</svg>

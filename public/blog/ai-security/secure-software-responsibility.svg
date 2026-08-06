@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Shared responsibility model for secure software</title>
+  <desc id="desc">Business, security, platform, and software engineering responsibilities converge to produce secure software and reduced business risk.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#11111a"/><stop offset="1" stop-color="#09090d"/></linearGradient>
+    <linearGradient id="result" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6761d9"/><stop offset="1" stop-color="#159d8d"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7772dd"/></marker>
+  </defs>
+  <rect width="1200" height="650" rx="24" fill="url(#bg)"/><rect width="1200" height="650" rx="24" fill="url(#grid)"/><rect x="1" y="1" width="1198" height="648" rx="23" fill="none" stroke="#2b2b35"/>
+  <text x="54" y="68" fill="#8b87f8" font-family="ui-monospace, monospace" font-size="17" letter-spacing="2">SECURE SOFTWARE IS A TEAM SPORT</text>
+  <text x="54" y="112" fill="#f0f0f4" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Different roles own different parts of the risk</text>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <g transform="translate(48 170)">
+      <rect width="250" height="210" rx="18" fill="#171720" stroke="#3a3863"/>
+      <text x="24" y="42" fill="#b9b6ff" font-family="ui-monospace, monospace" font-size="15">BUSINESS / DOMAIN</text>
+      <text x="24" y="84" fill="#f0f0f4" font-size="22" font-weight="700">Know the asset</text>
+      <text x="24" y="122" fill="#9a9aa6" font-size="16">• business impact</text>
+      <text x="24" y="151" fill="#9a9aa6" font-size="16">• risk tolerance</text>
+      <text x="24" y="180" fill="#9a9aa6" font-size="16">• acceptance authority</text>
+    </g>
+    <g transform="translate(332 170)">
+      <rect width="250" height="210" rx="18" fill="#171720" stroke="#3a3863"/>
+      <text x="24" y="42" fill="#b9b6ff" font-family="ui-monospace, monospace" font-size="15">SECURITY</text>
+      <text x="24" y="84" fill="#f0f0f4" font-size="22" font-weight="700">Frame the threat</text>
+      <text x="24" y="122" fill="#9a9aa6" font-size="16">• threat models</text>
+      <text x="24" y="151" fill="#9a9aa6" font-size="16">• guardrails and review</text>
+      <text x="24" y="180" fill="#9a9aa6" font-size="16">• assurance evidence</text>
+    </g>
+    <g transform="translate(616 170)">
+      <rect width="250" height="210" rx="18" fill="#171720" stroke="#287b70"/>
+      <text x="24" y="42" fill="#70e1d1" font-family="ui-monospace, monospace" font-size="15">PLATFORM</text>
+      <text x="24" y="84" fill="#f0f0f4" font-size="22" font-weight="700">Pave the road</text>
+      <text x="24" y="122" fill="#9a9aa6" font-size="16">• secure defaults</text>
+      <text x="24" y="151" fill="#9a9aa6" font-size="16">• approved modules</text>
+      <text x="24" y="180" fill="#9a9aa6" font-size="16">• automated controls</text>
+    </g>
+    <g transform="translate(900 170)">
+      <rect width="250" height="210" rx="18" fill="#171720" stroke="#287b70"/>
+      <text x="24" y="42" fill="#70e1d1" font-family="ui-monospace, monospace" font-size="15">SOFTWARE ENGINEERING</text>
+      <text x="24" y="84" fill="#f0f0f4" font-size="22" font-weight="700">Land the fix</text>
+      <text x="24" y="122" fill="#9a9aa6" font-size="16">• architecture and code</text>
+      <text x="24" y="151" fill="#9a9aa6" font-size="16">• tests and deployment</text>
+      <text x="24" y="180" fill="#9a9aa6" font-size="16">• long-term ownership</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#7772dd" stroke-width="3" marker-end="url(#arrow)">
+    <path d="M173 392V438H450"/>
+    <path d="M457 392V438"/>
+    <path d="M741 392V438"/>
+    <path d="M1025 392V438H750"/>
+  </g>
+
+  <g transform="translate(330 446)" font-family="Inter, Arial, sans-serif">
+    <rect width="540" height="116" rx="22" fill="url(#result)"/>
+    <text x="270" y="48" text-anchor="middle" fill="#fff" font-size="27" font-weight="750">Well-secured software</text>
+    <text x="270" y="82" text-anchor="middle" fill="#e8fffb" font-size="18">tested fixes · usable controls · lower business risk</text>
+  </g>
+  <text x="600" y="612" text-anchor="middle" fill="#777784" font-family="ui-monospace, monospace" font-size="14">A pentest can reveal a path. Product engineering must close it safely.</text>
+</svg>

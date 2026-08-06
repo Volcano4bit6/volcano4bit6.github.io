@@ -1,0 +1,168 @@
+---
+title: "Don't Just Fix Vulnerabilities: Learn to Manage Risk"
+description: 'CIA, AAA, vulnerabilities, threats, exposure, controls, and four risk responses - a practical foundation for moving from finding bugs to reducing business risk.'
+pubDate: 2026-08-06
+tags: ['Security', 'Risk Management', 'Software Engineering']
+lang: 'en'
+draft: false
+---
+
+In the [previous post](/blog/ai-changed-security-clock/), I wrote about how AI is moving vulnerability discovery and exploitation to a new scale. But the more issues we find, the more urgently we need to answer a harder question: which ones actually deserve priority?
+
+After taking a security course, many developers develop the same reflex: they see vulnerabilities everywhere. This header is missing. That package has a CVE. This endpoint is not restricted enough. Every finding is red, and safety seems possible only when the count returns to zero.
+
+But a real security team rarely has enough people, time, or money to address 100 percent of everything at once. More importantly, two vulnerabilities with the same technical severity do not necessarily create the same business consequence. A version disclosure on an isolated test page and a flaw that can modify payment amounts may both appear in a scanner, but they clearly do not belong in the same queue position.
+
+That is when the question needs to change from:
+
+> "How many vulnerabilities does the system have?"
+
+to:
+
+> **"What scenario could happen, how would it hurt the business, and what are we going to do about that risk?"**
+
+That is the difference between vulnerability management and risk management.
+
+## Start with CIA, but do not worship the triangle
+
+The most familiar foundation in information security is the CIA Triad:
+
+- **Confidentiality:** information is not accessed or disclosed to unauthorized people or systems.
+- **Integrity:** information and systems are not changed or destroyed without authorization. This is broader than data remaining unchanged on its way from A to B; changes must remain correct, intentional, and trustworthy across the lifecycle.
+- **Availability:** authorized users can access information and services in a timely and reliable manner.
+
+These definitions follow [NIST FIPS 199](https://doi.org/10.6028/NIST.FIPS.199). CIA gives us three opening questions for any asset: who must not see it, who must not change it, and when must it remain available?
+
+![The CIA Triad and the AAA access-control layer](/blog/ai-security/cia-aaa-foundation.svg)
+
+*CIA describes protection objectives; AAA helps control and trace access.*
+
+We often draw CIA as an equilateral triangle to remind ourselves not to forget a corner. But "all three sides must always be equal" is not a NIST requirement, and it would be wrong for many systems. A public status page holds little confidential data but has a strong availability objective. A key vault places exceptional weight on confidentiality and integrity. A payment system strongly protects the integrity of the amount, recipient, and transaction state while still requiring adequate availability.
+
+The balance also includes usability, cost, and business objectives. Requiring three in-person approvals for every tiny transfer might increase confidentiality and integrity, but the product would become almost unusable. Removing authentication to make the flow perfectly smooth would push fraud risk beyond what the business can tolerate.
+
+Good security does not maximize one corner. It **chooses protection appropriate to the context**.
+
+## In AAA, the last A is Accounting
+
+Another common foundation is AAA:
+
+1. **Authentication:** who are you?
+2. **Authorization:** what may you do?
+3. **Accounting:** which resources did you use, when, and with what result?
+
+In the standard usage documented by [IETF RFC 2989](https://www.rfc-editor.org/rfc/rfc2989), the third A is *Accounting*, not *Accountability*. The ideas are closely related: accounting creates records, while strong logging and auditing allow an organization to investigate, attribute, and prove what happened.
+
+This is also the piece developers often neglect. We build login, implement RBAC, and then log a generic line such as `request failed`. During an incident, nobody can tell which identity made the call, which permission was exercised, which asset was touched, from where, or when. NIST devotes an entire control family to [Audit and Accountability](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/800-171r3/NIST.SP.800-171r3.html): choose events to log, generate records with enough content, protect those records from modification or deletion, and actually review and correlate them.
+
+Logging is not an optional debugging feature. It is a security control.
+
+## Turn five concepts into one risk scenario
+
+The webinar repeatedly returned to five words: vulnerability, threat, risk, exposure, and control. I find them easier to remember as one story than as five isolated definitions.
+
+First, there must be an **asset** worth protecting: customer data, a payment service, source code, credentials, operational capability, or the company's reputation.
+
+- A **vulnerability** is a weakness or internal condition through which the asset could be harmed: SQL injection, excessive permissions, long-lived secrets, or an untrusted dataset parser that can execute code.
+- A **threat** is a source or event capable of exploiting that weakness: an external attacker, insider, malware, an AI agent with tool access, or even an operational mistake.
+- **Exposure** describes how reachable the asset and attack path are. Internet-facing endpoints, public buckets, metadata services open to pods, excessive egress routes, and credentials valid across many clusters all enlarge the attack surface. The [OWASP Attack Surface Analysis Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html) defines that surface through the paths by which data or commands enter and leave, plus the code and data protecting those paths.
+- **Risk** is the possibility that a threat event creates harm, combining likelihood and impact. [NIST SP 800-30 Rev. 1](https://doi.org/10.6028/NIST.SP.800-30r1) uses threats, vulnerabilities, likelihood, and impact in risk assessment; OWASP offers the practical shorthand `Risk = Likelihood × Impact`.
+- A **control** is a safeguard or countermeasure that reduces likelihood, impact, or both.
+
+![The chain from assets, exposure, threats, and vulnerabilities to business risk](/blog/ai-security/risk-chain.svg)
+
+*A vulnerability does not automatically equal serious risk. We still need a threat scenario, exposure, and business impact.*
+
+The webinar notes described vulnerability as a necessary condition and threat as a sufficient condition. That is memorable but too rigid. A threat may fail to exploit a weakness; a vulnerability may have no reachable path; and even successful exploitation can create different impact depending on the asset and downstream controls. A safer method is to write a complete **risk scenario**:
+
+> An Internet attacker (**threat**) can reach a public import endpoint (**exposure**) and exploit template injection in its parser (**vulnerability**) to execute code in a production pod, steal credentials, and alter transaction data (**technical impact**), causing financial loss, compliance violations, and loss of customer trust (**business impact**).
+
+Once the team can write that sentence, it knows what it is trying to reduce.
+
+## Translate technical risk into business risk
+
+Security engineers tend to speak in CVEs, CVSS scores, privilege escalation, and RCE. Clients and business owners speak in revenue, downtime, legal penalties, SLAs, and reputation. Neither side is wrong; they are standing at opposite ends of the same risk scenario.
+
+The [OWASP Risk Rating Methodology](https://owasp.org/www-community/OWASP_Risk_Rating_Methodology) emphasizes that business impact is more important than technical impact when making a decision. A technically high finding can be low business risk in an isolated system with no real data. A moderate-looking bug in a settlement flow can generate enormous loss.
+
+That means business analysts, product owners, bridge engineers, domain experts, and business owners are not outside the security process. They help answer:
+
+- What is this asset worth?
+- How much downtime breaks a commitment?
+- Who is affected if this data is disclosed?
+- What chain of consequences follows if one number is changed here?
+
+Security contributes an understanding of technical likelihood. Domain owners contribute an understanding of business impact. Risk becomes meaningful only when the two meet.
+
+## Controls need layers
+
+A practical way to group controls is to look at three layers. [NIST's guide to non-technical controls](https://pages.nist.gov/FederalProfile-8259A/nontechnical/) separates administrative and physical controls, while [technical controls](https://csrc.nist.gov/glossary/term/Technical_Controls) are primarily executed through mechanisms in hardware, software, or firmware:
+
+- **Administrative controls:** policies, processes, assigned responsibility, and training. For example, company policy prohibits personal devices from accessing internal systems.
+- **Technical controls:** mechanisms enforced through hardware, software, or firmware. For example, conditional access allows only enrolled and compliant devices onto the VPN.
+- **Physical controls:** badges, locks, cameras, guards, and biometric readers around sensitive areas.
+
+Frameworks group these differently - NIST commonly uses management, operational, and technical controls - but the lesson is the same: **a policy without enforcement is weak**. If a company merely emails "do not use personal devices" while its systems accept every device and record no access evidence, the administrative control stands alone. A technical control turns intent into enforced behavior; logging reveals exceptions; physical controls protect where systems actually exist.
+
+We do not need every control for every risk. We need a sufficient, mutually supporting set that fits the impact.
+
+## Four ways to respond to risk
+
+Once a risk is understood, the organization has four common options. [NIST SP 800-39](https://doi.org/10.6028/NIST.SP.800-39) lists accept, avoid, mitigate, share, and transfer; in everyday practice, share and transfer are often discussed together.
+
+![Four risk responses and the residual-risk loop](/blog/ai-security/risk-treatment-loop.svg)
+
+### 1. Avoid
+
+Remove the activity or business logic that creates the risk. If arbitrary file upload offers little value but creates a large attack surface, removing the feature may be better than building ten sandbox layers around it.
+
+### 2. Mitigate
+
+Introduce controls that reduce likelihood or impact: input validation, network isolation, short-lived credentials, limited egress, rate limiting, backups, detection, and response automation. Risk does not disappear; what remains is **residual risk**.
+
+### 3. Accept
+
+Consciously accept the risk when the residual level fits the organization's tolerance and further treatment would not be justified. This should be an informed, recorded decision made by someone accountable for the business impact - not a developer closing a ticket because "it is probably fine." The Authorize step of the [NIST Risk Management Framework](https://csrc.nist.gov/Projects/risk-management/about-rmf/authorize-step) places that determination with a responsible senior official.
+
+### 4. Transfer or share
+
+Use insurance, contracts, managed services, or vendors to allocate part of the consequence and operational responsibility. Outsourcing does not make the risk disappear. Customer data can still be exposed, your service can still stop, and your brand still has to explain the incident.
+
+There is an old industry joke with many versions: "Nobody gets fired for choosing a large vendor." It captures the defensive psychology of decision-making, but it is not a risk strategy. Transfer works only when contracts define boundaries, security requirements, SLAs, incident notification, control evidence, and the residual risk your own organization continues to own. The [NIST CSF FAQ](https://www.nist.gov/cyberframework/cybersecurity-framework-faqs-using-framework) likewise says framework outcomes apply whether an organization operates an asset itself or another party operates it as a service. Choosing Microsoft or any other hyperscaler does not move all accountability outside the company.
+
+## Risk does not reach zero; it enters a loop
+
+Controls always leave residual risk. The goal is to bring it to or below a level approved by the business, then continue monitoring it. NIST defines [residual risk](https://csrc.nist.gov/glossary/term/residual_risk) as the portion remaining after controls or risk responses have been applied.
+
+That level is not static. An endpoint used only internally today may be opened to the Internet next month. Credential scope can expand. AI can make an exploit that was once too expensive much cheaper. Business impact changes when a system begins processing more money or more data.
+
+A short workflow I want engineers to keep is:
+
+1. **Know the asset and owner.** What are we protecting, and for whom?
+2. **Write the risk scenario.** Which threat exploits which vulnerability through which exposure?
+3. **Connect impact to CIA and the business.** What follows from losing confidentiality, integrity, or availability?
+4. **Estimate likelihood and impact.** State assumptions instead of pretending the number is perfectly precise.
+5. **Choose a response and controls.** Avoid, mitigate, accept, or transfer/share?
+6. **Record residual risk and approval.** Who actually has authority to accept the consequence?
+7. **Monitor change.** Reassess when the threat, exposure, asset, or control changes.
+
+That is risk-based thinking: do not fix everything merely to turn a dashboard green; spend effort on the paths capable of causing the greatest harm.
+
+AI will make the number of discovered vulnerabilities grow faster. If we continue measuring security by closed-ticket count, we will only run faster on a treadmill. The shift I want to take from this webinar is different: from "which finding is red?" to "which business risk is largest, who owns it, and which control actually makes it smaller?"
+
+That is security engineering.
+
+## References
+
+1. NIST. [*Standards for Security Categorization of Federal Information and Information Systems*, FIPS 199.](https://doi.org/10.6028/NIST.FIPS.199) February 2004.
+2. IETF. [*Network Access AAA Evaluation Criteria*, RFC 2989.](https://www.rfc-editor.org/rfc/rfc2989) November 2000.
+3. NIST. [*Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations*, SP 800-171 Rev. 3, section 3.3 Audit and Accountability.](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/800-171r3/NIST.SP.800-171r3.html) May 2024.
+4. NIST. [*Guide for Conducting Risk Assessments*, SP 800-30 Rev. 1.](https://doi.org/10.6028/NIST.SP.800-30r1) September 2012.
+5. OWASP. ["Attack Surface Analysis Cheat Sheet."](https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html)
+6. OWASP. ["OWASP Risk Rating Methodology."](https://owasp.org/www-community/OWASP_Risk_Rating_Methodology)
+7. NIST. [*Managing Information Security Risk: Organization, Mission, and Information System View*, SP 800-39.](https://doi.org/10.6028/NIST.SP.800-39) March 2011.
+8. NIST. ["Risk Management Framework - Authorize Step."](https://csrc.nist.gov/Projects/risk-management/about-rmf/authorize-step)
+9. NIST CSRC Glossary. ["Residual Risk."](https://csrc.nist.gov/glossary/term/residual_risk)
+10. NIST. ["IoT Non-Technical Security and Privacy Controls."](https://pages.nist.gov/FederalProfile-8259A/nontechnical/)
+11. NIST CSRC Glossary. ["Technical Controls."](https://csrc.nist.gov/glossary/term/Technical_Controls)
+12. NIST. ["Cybersecurity Framework FAQs - Using the Framework."](https://www.nist.gov/cyberframework/cybersecurity-framework-faqs-using-framework)
